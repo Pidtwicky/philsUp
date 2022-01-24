@@ -10,15 +10,16 @@ export default function XHR(pathRequest, callback) {
     xhr.onload = () => {
 
         let response = xhr.response
-        console.log("xhr.response : " + response);
+        
         if (isJson(response)) {
 
             let json = JSON.parse(response);
-            callback(json)
+            callback(json);
+            console.log("Les données reçus de l'API sont les suivantes \n:  : " + response);
 
         } else {
 
-            console.log('Fichier XHR.js : Mauvais format de réception...')
+            console.log("L'erreur reçue de l'API est la suivante : \n" + response);
         }
     }
     xhr.send();

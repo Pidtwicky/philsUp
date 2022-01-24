@@ -1,10 +1,11 @@
 import React from "react";
 import { Text, FlatList, Image, View, StyleSheet } from "react-native";
 import XHR from "../utils/XHR";
+import DateHumanizer from "../utils/DateHumanizer";
 
-const callToAPI = "groupes";
+const callToAPI = "utilisateurs/2";
 
-export default class GroupList extends React.Component {
+export default class Profile extends React.Component {
 
     constructor(props) {
         super(props);
@@ -32,8 +33,8 @@ export default class GroupList extends React.Component {
                                 {item.name}
                             </Text>
 
-                            <Text style={styles.content}>
-                                {item.description}
+                            <Text style={styles.title}>
+                                {item.firstname}
                             </Text> 
                         </View>
                     }
@@ -109,9 +110,5 @@ const styles = StyleSheet.create({
     },
     img: {
         height: 200
-    },
-    content: {
-        textAlign: 'justify',
-        marginTop: 20
     }
 })
