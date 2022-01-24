@@ -2,7 +2,7 @@ import React from "react";
 import { Text, FlatList, Image, View, StyleSheet } from "react-native";
 import XHR from "../utils/XHR";
 
-const call = "http://192.168.1.32:8080/Stage/Stage_API/groupes";
+const call = "";
 
 export default class GroupList extends React.Component {
 
@@ -15,8 +15,7 @@ export default class GroupList extends React.Component {
 
     componentDidMount() {
 
-        // XHR('fred', call, {table: 'groupes'}, (response) => {
-            XHR('fred', call, 'utilisateurs', (response) => {
+        XHR( call, (response) => {
             this.setState({data: response.data})
         })
     }
@@ -29,21 +28,13 @@ export default class GroupList extends React.Component {
                     data={this.state.data}
                     renderItem={( {item} ) =>
                         <View style={styles.article}>
-                            <Text
-                                style={styles.title}
-                            >
+                            <Text style={styles.title}>
                                 {item.name}
                             </Text>
 
-                            <Text
-                                style={styles.content}
-                            >
+                            <Text style={styles.content}>
                                 {item.description}
-                            </Text>
-                            
-                            
-                            
-                            
+                            </Text> 
                         </View>
                     }
                 />

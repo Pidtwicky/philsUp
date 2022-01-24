@@ -1,8 +1,10 @@
-export default function XHR(type, domain, data, callback) {
 
-    let xhr = new XMLHttpRequest(),
-        text = (type === 'deezer') ? data : new URLSearchParams(data).toString(),
-        url = domain + text;
+const DOMAIN = "http://192.168.1.32:8080/Stage/Stage_API/";
+
+export default function XHR(pathRequest, callback) {
+
+    let xhr = new XMLHttpRequest();
+    let url = DOMAIN + pathRequest;
         
     xhr.open('GET', url, true);
     xhr.onload = () => {
@@ -11,12 +13,12 @@ export default function XHR(type, domain, data, callback) {
         console.log("xhr.response : " + response);
         if (isJson(response)) {
 
-            let json = (type === 'deezer') ? JSON.parse(response).data : JSON.parse(response)
+            let json = JSON.parse(response);
             callback(json)
 
         } else {
 
-            console.log('Mauvais format de réception...')
+            console.log('Fichier XHR.js : Mauvais format de réception...')
         }
     }
     xhr.send();
