@@ -2,7 +2,7 @@ import React from "react";
 import { Text, FlatList, Image, View, StyleSheet } from "react-native";
 import XHR from "../utils/XHR";
 
-const call = "";
+const call = "groupes";
 
 export default class GroupList extends React.Component {
 
