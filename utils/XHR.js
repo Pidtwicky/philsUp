@@ -15,11 +15,11 @@ export default function XHR(pathRequest, callback) {
 
             let json = JSON.parse(response);
             callback(json);
-            console.log("Les données reçus de l'API sont les suivantes :  : " + response);
+            console.log("Les données reçus de l'API sont les suivantes \n:  : " + response);
 
         } else {
 
-            console.log("L'erreur reçue de l'API est la suivante : " + response);
+            console.log("L'erreur reçue de l'API est la suivante : \n" + response);
         }
     }
     xhr.send();
