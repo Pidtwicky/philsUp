@@ -15,7 +15,7 @@ export default class GroupList extends React.Component {
 
     componentDidMount() {
 
-        XHR( call, (response) => {
+        XHR( callToAPI, (response) => {
             this.setState({data: response.data})
         })
     }
