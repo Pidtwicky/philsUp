@@ -35,7 +35,26 @@ export default class Profile extends React.Component {
 
                             <Text style={styles.title}>
                                 {item.firstname}
+                            </Text>
+
+                            <Text style={styles.title}>
+                                née le {DateHumanizer(item.birthday)}
                             </Text> 
+
+                            <Text style={styles.title}>
+                                Métier : {item.jobName}
+                            </Text>
+
+                            <Text style={styles.title}>
+                                Equipe : {item.teamName}
+                            </Text>
+
+                            <Text style={styles.title}>
+                                Equipe : {item.email}
+                            </Text>
+                            
+
+                            
                         </View>
                     }
                 />

@@ -15,7 +15,7 @@ export default function XHR(pathRequest, callback) {
 
             let json = JSON.parse(response);
             callback(json);
-            console.log("Les données reçus de l'API sont les suivantes \n:  : " + response);
+            console.log("Les données reçues de l'API sont les suivantes \n:  : " + response);
 
         } else {
 
