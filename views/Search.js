@@ -31,7 +31,7 @@ export default class Search extends React.Component {
             style={styles.input}
             autoCapitalize="none"
             value={inputValue}
-            onChangeText={onTextChange}
+            onChangeText={text => this.props.updateDatabase(text)}
           />
       
 

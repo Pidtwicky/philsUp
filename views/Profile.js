@@ -4,7 +4,7 @@ import XHR from "../utils/XHR";
 import DateHumanizer from "../utils/DateHumanizer";
 import Search from "./Search";
 
-const callToAPI = "utilisateurs/2";
+const callToAPI = "groupes";
 
 export default class Profile extends React.Component {
 
@@ -18,9 +18,14 @@ export default class Profile extends React.Component {
         
     }
 
-    onTextChange(text){
-        this.setState({inputValue: text.target.value});
-        console.log("Je fais des mofifications dans la barre de recherche : " );
+    updateResearch(text){
+        this.setState({inputValue: text});
+        console.log("Je fais des mofifications dans la barre de recherche : " + this.state.inputValue );
+
+        XHR( callToAPI + "/nom/" + this.state.inputValue, (response) => {
+            this.setState({data: response.data})
+        })
+
     }
        
 
@@ -37,47 +42,29 @@ export default class Profile extends React.Component {
             <View style={styles.container}>
                 <Search
                     inputValue={this.state.inputValue}
-                    onChangeText={text => this.onTextChange(text)}
+                    updateDatabase={(text) => this.updateResearch(text)}
                 />
                 
                 
 
-                {/* <FlatList
+                 <FlatList
                     data={this.state.data}
                     renderItem={( {item} ) =>
                         <View style={styles.article}>
                              
+                          
+
+                            <Text style={styles.title}>
+                                {item.name} {item.description}
+                            </Text>
+
                             
-                            <Text style={styles.title}>
-                                <Image source={require('../assets/images/avatar.png')}/>
-                                {item.name} {item.firstname}
-                            </Text>
-
-                            <Text style={styles.title}>
-                                
-                            </Text>
-
-                            <Text style={styles.title}>
-                                née le {DateHumanizer(item.birthday)}
-                            </Text> 
-
-                            <Text style={styles.title}>
-                                Métier : {item.jobName}
-                            </Text>
-
-                            <Text style={styles.title}>
-                                Equipe : {item.teamName}
-                            </Text>
-
-                            <Text style={styles.title}>
-                                Equipe : {item.email}
-                            </Text>
                             
 
                             
                         </View>
                     }
-                /> */}
+                /> 
             </View>
         )
     }
