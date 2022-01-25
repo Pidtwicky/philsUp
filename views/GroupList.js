@@ -1,6 +1,8 @@
 import React from "react";
 import { Text, FlatList, Image, View, StyleSheet } from "react-native";
 import XHR from "../utils/XHR";
+import HandleSpaceOnSearchBar from "../utils/Miscellaneous";
+import Search from "./Search";
 
 const callToAPI = "groupes";
 
@@ -9,21 +11,37 @@ export default class GroupList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            inputValue: '',
         }
     }
 
     componentDidMount() {
 
-        XHR( callToAPI+"/nom/"+myText, (response) => {
+        XHR( callToAPI, (response) => {
             this.setState({data: response.data})
         })
+    }
+
+    updateResearch(searchName){
+        this.setState({inputValue: searchName});
+        console.log("Je fais des mofifications dans la barre de recherche : " + searchName );
+        // console.log("Au meme moment, malgres mon setState sur inputValue, la variable n'est pas encore a jour : " + HandleSpaceOnSearchBar(searchName) );
+
+        XHR( callToAPI + "/nom/" + HandleSpaceOnSearchBar(searchName), (response) => {
+            this.setState({data: response.data})
+        })
+
     }
 
     render() {
 
         return(
             <View style={styles.container}>
+                <Search
+                    inputValue={this.state.inputValue}
+                    updateDatabase={(searchText) => this.updateResearch(searchText)}
+                />
                 <FlatList
                     data={this.state.data}
                     renderItem={( {item} ) =>

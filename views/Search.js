@@ -1,37 +1,28 @@
 import React from 'react';
-import { TextInput, StyleSheet, View } from 'react-native';
+import { TextInput, StyleSheet } from 'react-native';
 
 
 export default class Search extends React.Component {
 
 
     constructor(props) {
-        super(props);
-        this.state = {
+        super(props);                                                 //Récupère les props fournies lors de l'utilisation de la balise <Search props1={} props2={} .../> du parent
+        this.state = {                                                //Variables d'état, qui peuvent être actualisées au fil du temps, en fonction des interractions via setState()
             data: []
-
         }
     }
-    
-
-    // updateResearch = (text) => {
-    //         this.setState({
-    //           myText : text
-    //         })
-
-    //         console.log("affichage de la barre de recherche : " + this.state.myText); 
-    // }
-
 
     render() {
-      const {onTextChange, inputValue} = this.props;
-
+      const inputValue = this.props.inputValue;                       //Assigne la props "inputValue" fournie lors de l'utilisation de la balise <Search inputValue={}  .../> du parent
+      
         return (
           <TextInput
             style={styles.input}
+            placeholder={"Taper votre recherche"}     //exercice a faire pour comprendre le fonctionnement des props
+            clearButtonMode='always'
             autoCapitalize="none"
-            value={inputValue}
-            onChangeText={text => this.props.updateDatabase(text)}
+            value={inputValue}                                          //value={this.state.myText}
+            onChangeText={ text => this.props.updateDatabase(text) }    //onChangeText={(text) => this.setText(text)}   
           />
       
 
