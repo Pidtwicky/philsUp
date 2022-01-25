@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, FlatList, Image, View, StyleSheet } from "react-native";
 import XHR from "../utils/XHR";
 import DateHumanizer from "../utils/DateHumanizer";
+import Search from "./Search";
 
 const callToAPI = "utilisateurs/2";
 
@@ -10,9 +11,18 @@ export default class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            locals: {},
+            inputValue: '',
         }
+        
     }
+
+    onTextChange(text){
+        this.setState({inputValue: text.target.value});
+        console.log("Je fais des mofifications dans la barre de recherche : " );
+    }
+       
 
     componentDidMount() {
 
@@ -22,19 +32,29 @@ export default class Profile extends React.Component {
     }
 
     render() {
-
+        const {onTextChange, myText} = this.props;
         return(
             <View style={styles.container}>
-                <FlatList
+                <Search
+                    inputValue={this.state.inputValue}
+                    onChangeText={text => this.onTextChange(text)}
+                />
+                
+                
+
+                {/* <FlatList
                     data={this.state.data}
                     renderItem={( {item} ) =>
                         <View style={styles.article}>
+                             
+                            
                             <Text style={styles.title}>
-                                {item.name}
+                                <Image source={require('../assets/images/avatar.png')}/>
+                                {item.name} {item.firstname}
                             </Text>
 
                             <Text style={styles.title}>
-                                {item.firstname}
+                                
                             </Text>
 
                             <Text style={styles.title}>
@@ -57,7 +77,7 @@ export default class Profile extends React.Component {
                             
                         </View>
                     }
-                />
+                /> */}
             </View>
         )
     }
