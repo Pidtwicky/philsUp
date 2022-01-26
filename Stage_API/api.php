@@ -66,7 +66,7 @@ function getUsers(){
 
 function getUserInformationById( $id ){
     $pdo = getConnexion();
-    $query =   "    SELECT job.name , team.name, email, information.name, firstname, birthday FROM user
+    $query =   "    SELECT job.name jobName, team.name teamName, email, information.name, firstname, birthday FROM user
                     INNER JOIN information ON user.id = information.id
                     INNER JOIN job ON job.id = user.job_id
                     INNER JOIN team on team.id = user.team_id
@@ -81,6 +81,20 @@ function getUserInformationById( $id ){
 
     $statement->closeCursor();
     sendJSON($user);
+}
+
+function getGroupByName( $name ){
+
+    $pdo = getConnexion();
+    $query =        "   SELECT * FROM `group`
+                        WHERE `group`.`name` LIKE '%$name%' ";
+
+    $statement = $pdo->prepare($query);
+    $statement->execute();
+    $group = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    $statement->closeCursor();
+    sendJSON($group);
 }
 
 function getConnexion(){

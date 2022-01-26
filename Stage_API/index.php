@@ -3,6 +3,12 @@
 
 require_once("./api.php");
 
+function handleSpaceFromURL($search){
+
+    $res = str_replace("~*-", " ", $search);
+    return $res;
+}
+
 //www.monsite.fr/formations                         CAS 1
 // => www.monsite.fr/index.php?myRequest=formations
 
@@ -18,7 +24,13 @@ try{
                     getGroups();
                 }
                 else{
-                    getGroupContent( $url[1] );
+                    if( $url[1] === "nom" ){
+                        
+                        getGroupByName( handleSpaceFromURL($url[2]) );
+                    }
+                    else{
+                        getGroupContent( $url[1] );
+                    }
                 }
             break;
 
@@ -46,4 +58,5 @@ try{
     ];
     print_r($error);
 }
+
 
