@@ -1,5 +1,6 @@
 import React from "react";
-import { Text, FlatList, Image, View, StyleSheet } from "react-native";
+import { Text, FlatList, ImageBackground, Image, View, StyleSheet } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import XHR from "../utils/XHR";
 import DateHumanizer from "../utils/DateHumanizer";
 
@@ -27,6 +28,25 @@ export default class Profile extends React.Component {
             <View style={styles.container}>
                 {/* Menu Burger & Barre ed recherche */}
 
+                <LinearGradient
+                    colors={["rgba(15,117,188, 1)", "rgba(232,90,143, 1)", "rgba(255,127,111, 1)"]}
+                    start={{x: 0, y: 0}}
+                    end={{x: 1, y: 1}}
+                    locations={[0, 0.7, 1]} 
+                    // useAngle={true} 
+                    // angle={90} 
+                    // angleCenter={{ x: 0.5, y: 0.5 }}
+                    style={styles.banner} >
+
+                        <Image 
+                        style={styles.bannerImage}
+                            source={require('../assets/images/avatar.png')}
+                        />
+
+                        {/* <ImageBackground source={require('../assets/images/avatar.png')} resizeMode="cover" >
+                        </ImageBackground> */}
+                </LinearGradient>
+
                 <FlatList
                     data={this.state.data}
                     renderItem={( {item} ) =>
@@ -34,7 +54,7 @@ export default class Profile extends React.Component {
                              
                             
                             <Text style={styles.title}>
-                                <Image source={require('../assets/images/avatar.png')}/>
+                                
                                 {item.name} {item.firstname}
                             </Text>
 
@@ -71,9 +91,32 @@ export default class Profile extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 20
+        paddingTop: 20,
+        width:'100%',
+        backgroundColor:'#f8f8f8'
+    },
+    banner:{
+        marginTop: 40,
+        height:100,
+        width:'100%',
+        position:'absolute'
+    },
+    bannerImage:{
+        position:'relative',
+        top:50,
+        left:50,
+        height:100,
+        width:100,
+        backgroundColor:'#f8f8f8',
+        borderWidth:2,
+        borderColor:'#f8f8f8',
+        borderStyle: "solid",
+        
+        borderRadius: 50,
+
     },
     article: {
+        top:200,
         padding: 20,
         margin: 20,
         fontSize: 18,
