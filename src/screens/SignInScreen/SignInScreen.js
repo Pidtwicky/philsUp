@@ -12,6 +12,15 @@ const SignInScreen = () => {
 
     const {height} = useWindowDimensions();
 
+    const onSignInPressed = () => {
+        console.warn('Sign in');
+    };
+
+    const onRegisterPressed = () => {
+        console.warn('Se créer un compte');
+    };
+
+
     return (
 
         <View>
@@ -46,7 +55,11 @@ const SignInScreen = () => {
                  setValue={setPassword}
                  secureTextEntry
                  />
+
+                 <CustomButton text="Se connecter" onPress={onSignInPressed} type="PRIMARY" />
                  
+                 <CustomButton text="Créer un compte" onPress={onRegisterPressed} type="TERTIARY"/>
+            
              </View>
 
         </View>

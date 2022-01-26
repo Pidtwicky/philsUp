@@ -26,12 +26,11 @@ const styles = StyleSheet.create({
 
         paddingHorizontal: 20,
         marginVertical: 20,
-        padding: 5,
+        padding: 8,
 
         alignSelf: 'center',
 
     },
-    input: {},
 })
 
 export default CustomInput;
