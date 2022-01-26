@@ -1,7 +1,7 @@
 import React from "react";
 import { createDrawerNavigator, DrawerItemList } from "@react-navigation/drawer";
 import { SafeAreaView, View, Image, Dimensions } from "react-native";
-import GroupList from '../../../views/GroupList';
+import GroupList from '../../views/GroupList';
 
 const MyDrawer = createDrawerNavigator(),
     winHeight = Dimensions.get("window").height;
@@ -26,7 +26,7 @@ export default class Drawer extends React.Component {
                                 }}
                             >
                                 <Image
-                                    source={require('../../../assets/images/icon.png')}
+                                    source={require('../../assets/images/icon.png')}
                                     style={{
                                         height: '100%',
                                         resizeMode: 'contain'

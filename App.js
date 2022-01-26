@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import Drawer from './components/common/Navigation/Drawer';
+import Drawer from './components/Navigation/Drawer';
 
 export default class App extends React.Component {
 
