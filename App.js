@@ -1,21 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import Profile from './views/Profile.js'
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import Drawer from './components/Navigation/Drawer';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Profile />
-      <StatusBar style="auto" />
-    </View>
-  );
+export default class App extends React.Component {
+
+    render() {
+        return (
+            <NavigationContainer>
+                <Drawer />
+                <StatusBar style="auto"/>
+            </NavigationContainer>
+        );
+    }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
