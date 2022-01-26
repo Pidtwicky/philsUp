@@ -1,29 +1,32 @@
 <?php
 
-define( "URL", str_replace("index.php", "", ( isset($_SERVER["HTTPS"])? "https" : "http" )."://".$_SERVER["HTTP_HOST"].$_SERVER["PHP_SELF"] )); //point over site's root url
+define("URL", str_replace("index.php", "", (isset($_SERVER["HTTPS"]) ? "https" : "http") . "://" . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"])); //point over site's root url
 
-function sendJSON($infos){
+function sendJSON($infos)
+{
 
     $infos = transformIntoDataForReact($infos);
-    
+
     header('Accept: application/json');
     header("Acces-Control-Allow-Origin: *");           //specify who can access to the data
     header("Content-Type: application/json");          //specify which kind of data type is sent 
     echo json_encode($infos, JSON_UNESCAPED_UNICODE);
 }
 
-function transformIntoDataForReact($infos){
+function transformIntoDataForReact($infos)
+{
 
     // $infos = "{'data':" . $infos . ",'error':null}";
-    
-    $data = array('data'=>$infos);
+
+    $data = array('data' => $infos);
 
     return $data;
 }
 
-function getGroups(){
+function getGroups()
+{
     $pdo = getConnexion();
-    $query =   "SELECT * FROM .group";
+    $query =   "SELECT * FROM `group`";
 
     $statement = $pdo->prepare($query);
     $statement->execute();
@@ -33,7 +36,8 @@ function getGroups(){
     sendJSON($groups);
 }
 
-function getGroupContent( $id ){
+function getGroupContent($id)
+{
     $pdo = getConnexion();
     $query =   "    SELECT * FROM message 
                     INNER JOIN .group ON .group.id = message.group_entity_id
@@ -47,7 +51,8 @@ function getGroupContent( $id ){
     sendJSON($groups);
 }
 
-function getUsers(){
+function getUsers()
+{
     $query =   "SELECT * FROM user";
     $pdo = getConnexion();
 
@@ -64,7 +69,8 @@ function getUsers(){
     sendJSON($users);
 }
 
-function getUserInformationById( $id ){
+function getUserInformationById($id)
+{
     $pdo = getConnexion();
     $query =   "    SELECT job.name , team.name, email, information.name, firstname, birthday FROM user
                     INNER JOIN information ON user.id = information.id
@@ -77,12 +83,13 @@ function getUserInformationById( $id ){
     $user = $statement->fetchAll(PDO::FETCH_ASSOC);
 
     // $user["image"] = URL."assets/images/users/".$user["image"];
-    
+
 
     $statement->closeCursor();
     sendJSON($user);
 }
 
-function getConnexion(){
-    return new PDO("mysql:host=localhost;dbname=stage_philiance;charset=utf8", "root", "");
+function getConnexion()
+{
+    return new PDO("mysql:host=localhost;dbname=stage_philliance;charset=utf8", "root", "");
 }
