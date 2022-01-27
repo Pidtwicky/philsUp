@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from '
 import Logo from '../../../assets/images/logo_philsup.png';
 import CustomInPut from '../../components/CustomInPut';
 import CustomButton from '../../components/CustomButton';
+import {useNavigation} from '@react-navigation/native';
 
 const SignUpScreen = () => {
 
@@ -13,9 +14,12 @@ const SignUpScreen = () => {
 
 
     const {height} = useWindowDimensions();
+    const navigation = useNavigation();
 
     const onSignInPress = () => {
         console.warn('onSignInPress');
+
+        navigation.navigate('SignIn')
     };
 
     const onRegisterPressed = () => {
