@@ -13,12 +13,13 @@ export default class Search extends React.Component {
     }
 
     render() {
-      const inputValue = this.props.inputValue;                       //Assigne la props "inputValue" fournie lors de l'utilisation de la balise <Search inputValue={}  .../> du parent
+      const inputValue = this.props.inputValue;
+                            //Assigne la props "inputValue" fournie lors de l'utilisation de la balise <Search inputValue={}  .../> du parent
       
         return (
           <TextInput
             style={styles.input}
-            placeholder={"Taper votre recherche"}     //exercice a faire pour comprendre le fonctionnement des props
+            placeholder={this.props.placeholder}     //exercice a faire pour comprendre le fonctionnement des props
             clearButtonMode='always'
             autoCapitalize="none"
             value={inputValue}                                          //value={this.state.myText}

@@ -21,6 +21,7 @@ export default class GroupList extends React.Component {
         XHR( callToAPI, (response) => {
             this.setState({data: response.data})
         })
+        console.log("je suis dans componentDidMount (Grouplist)");
     }
 
     updateResearch(searchName){
@@ -32,15 +33,20 @@ export default class GroupList extends React.Component {
             this.setState({data: response.data})
         })
 
+        console.log("je suis dans updateResearch (Grouplist)");
+
     }
 
     render() {
 
+        const placeholder = "chercher un groupe"
+
         return(
             <View style={styles.container}>
                 <Search
-                    inputValue={this.state.inputValue}
-                    updateDatabase={(searchText) => this.updateResearch(searchText)}
+                    inputValue={this.state.inputValue} // parent vers enfant 
+                    updateDatabase={(searchText) => this.updateResearch(searchText)} // enfant vers parent
+                    placeholder={placeholder}
                 />
                 <FlatList
                     data={this.state.data}

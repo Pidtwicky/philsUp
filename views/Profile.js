@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, FlatList, ImageBackground, Image, View, StyleSheet } from "react-native";
+import { Text, FlatList, ScrollView, Image, View, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import XHR from "../utils/XHR";
 import DateHumanizer from "../utils/DateHumanizer";
@@ -22,12 +22,9 @@ export default class Profile extends React.Component {
         })
     }
 
-    render() {
-
+    renderHeader = () => {
         return(
-            <View style={styles.container}>
-                {/* Menu Burger & Barre ed recherche */}
-
+            <>    
                 <LinearGradient
                     colors={["rgba(15,117,188, 1)", "rgba(232,90,143, 1)", "rgba(255,127,111, 1)"]}
                     start={{x: 0, y: 0}}
@@ -38,17 +35,33 @@ export default class Profile extends React.Component {
                     // angleCenter={{ x: 0.5, y: 0.5 }}
                     style={styles.banner} >
 
-                        <Image 
+                    <Image 
                         style={styles.bannerImage}
-                            source={require('../assets/images/avatar.png')}
-                        />
-
-                        {/* <ImageBackground source={require('../assets/images/avatar.png')} resizeMode="cover" >
-                        </ImageBackground> */}
+                        source={require('../assets/images/avatar.png')}
+                    />
                 </LinearGradient>
 
+                {/* Force l'affichage du RenderHeader */}
+                <View>
+                    <Text></Text>
+                </View>
+            </>
+        );
+      };
+
+    render() {
+
+        return(
                 <FlatList
+
+                        ListHeaderComponent={this.renderHeader()}
+                    
+
+
+
+
                     data={this.state.data}
+                    keyExtractor={item => item.email}
                     renderItem={( {item} ) =>
                         <View style={styles.article}>
                              
@@ -59,31 +72,29 @@ export default class Profile extends React.Component {
                             </Text>
 
                             <Text style={styles.title}>
-                                
-                            </Text>
-
-                            <Text style={styles.title}>
                                 née le {DateHumanizer(item.birthday)}
                             </Text> 
 
                             <Text style={styles.title}>
-                                Métier : {item.jobName}
+                                Equipe : {item.teamName} 
                             </Text>
 
                             <Text style={styles.title}>
-                                Equipe : {item.teamName}
+                                Equipe : {item.teamName} 
                             </Text>
 
                             <Text style={styles.title}>
-                                Equipe : {item.email}
+                                Equipe : {item.teamName} 
                             </Text>
-                            
+
+                            <Text style={styles.title}>
+                                Métier : {item.jobName} 
+                            </Text>
 
                             
                         </View>
                     }
                 />
-            </View>
         )
     }
 }
@@ -110,7 +121,6 @@ const styles = StyleSheet.create({
         backgroundColor:'#f8f8f8',
         borderWidth:2,
         borderColor:'#f8f8f8',
-        borderStyle: "solid",
         
         borderRadius: 50,
 
