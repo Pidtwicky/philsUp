@@ -13,11 +13,11 @@ const SignInScreen = () => {
     const {height} = useWindowDimensions();
 
     const onSignInPressed = () => {
-        console.warn('Sign in');
+        console.warn('onSignInPressed');
     };
 
     const onRegisterPressed = () => {
-        console.warn('Se créer un compte');
+        console.warn('onRegisterPressed');
     };
 
 

@@ -25,6 +25,8 @@ const styles = StyleSheet.create({
 
     container_PRIMARY: {
       backgroundColor: '#0F75BC',
+      marginVertical: 20,
+
     },
     container_TERTIARY:{
       backgroundColor: '#FF7F6F',
