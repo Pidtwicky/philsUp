@@ -12,9 +12,7 @@ const HomeScreen = () => {
 
 
     const onSignInPressed = () => {
-        console.warn('onSignInPressed');
-        // validation user
-
+        // envoyer sur la page de creation de compte
         navigation.navigate('SignIn')
     };
 

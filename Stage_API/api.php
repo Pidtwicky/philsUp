@@ -91,5 +91,5 @@ function getUserInformationById($id)
 
 function getConnexion()
 {
-    return new PDO("mysql:host=localhost;dbname=stage_philliance;charset=utf8", "root", "");
+    return new PDO("mysql:host=localhost;dbname=stage_philiance;charset=utf8", "root", "");
 }

@@ -17,12 +17,12 @@ const SignUpScreen = () => {
     const navigation = useNavigation();
 
     const onSignInPress = () => {
-        console.warn('onSignInPress');
-
+        // renvoyer sur la page login/se connecter
         navigation.navigate('SignIn')
     };
 
     const onRegisterPressed = () => {
+        // créer l'identité de l'utilisateur
         console.warn('onRegisterPressed');
     };
 

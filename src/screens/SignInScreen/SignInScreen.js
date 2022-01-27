@@ -14,12 +14,12 @@ const SignInScreen = () => {
     const navigation = useNavigation();
 
     const onSignInPressed = () => {
-        console.warn('onSignInPressed');
+        // validation de l'identité de l'utilisateur
+        navigation.navigate('Feed')
     };
 
     const onRegisterPressed = () => {
-        console.warn('onRegisterPressed');
-
+        // envoyer sur la page de creation de compte
         navigation.navigate('SignUp')
     };
 
@@ -92,36 +92,3 @@ const styles = StyleSheet.create({
 });
 
 export default SignInScreen
-
-/*
-
-// code christian
-// fonction > const
-
-function SignInScreen(){
-return(
-    <View>
-        <View style={styles.root} >
-
-        <Text style={styles.h1}>Login</Text>
-
-                <Image
-                source={Logo}
-                style={[styles.logo, { height: height * 0.17 }]}
-                resizeMode='contain' />
-
-
-                <Text style={styles.text}>Adresse mail</Text>
-                <CustomInPut />
-                <Text style={styles.text}>Mot de passe</Text>
-                <CustomInPut />
-
- </View> 
-
-<View
-></View>
-
- </View>
-)
-
-} */
