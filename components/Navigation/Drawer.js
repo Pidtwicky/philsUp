@@ -2,6 +2,7 @@ import React from "react";
 import { createDrawerNavigator, DrawerItemList } from "@react-navigation/drawer";
 import { SafeAreaView, View, Image, Dimensions } from "react-native";
 import GroupList from '../../views/GroupList';
+import Profile from '../../views/Profile';
 
 const MyDrawer = createDrawerNavigator(),
     winHeight = Dimensions.get("window").height;
@@ -42,6 +43,10 @@ export default class Drawer extends React.Component {
                 <MyDrawer.Screen
                     name="GroupList"
                     children={() => <GroupList />}
+                />
+                <MyDrawer.Screen
+                    name="Profile"
+                    children={() => <Profile />}
                 />
             </MyDrawer.Navigator>
         )
