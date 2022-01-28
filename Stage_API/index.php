@@ -3,11 +3,21 @@
 
 require_once("./api.php");
 
+function handleSpaceFromURL($search){
+
+    $res = str_replace("~*-", " ", $search);
+    return $res;
+}
+
 //www.monsite.fr/formations                         CAS 1
 // => www.monsite.fr/index.php?myRequest=formations
+// => http://192.168.1.32:8080/Stage/philsUp/Stage_API/index.php?myRequest=groupes
 
-//www.monsite.fr/formations/:categorie              CAS 2
-//www.monsite.fr/formation/:id                      CAS 3
+//www.monsite.fr/formations/categorie              CAS 2
+// => www.monsite.fr/index.php?myRequest=formations/categorie
+
+//www.monsite.fr/formation/id                      CAS 3
+// => www.monsite.fr/index.php?myRequest=formations/id
 
 try{
     if( !empty( $_GET["myRequest"] ) ){
@@ -18,7 +28,13 @@ try{
                     getGroups();
                 }
                 else{
-                    getGroupContent( $url[1] );
+                    if( $url[1] === "nom" ){
+                        
+                        getGroupByName( handleSpaceFromURL($url[2]) );
+                    }
+                    else{
+                        getGroupContent( $url[1] );
+                    }
                 }
             break;
 
@@ -28,6 +44,15 @@ try{
                 }
                 else{
                     getUserInformationById( $url[1] );
+                }
+            break;
+
+            case "inscription":
+                if( checkEmail($url[3]) ){ //CAS 1 - empty
+                    echo ('inscription');
+                    createUser( $url[1], $url[2], $url[3], $url[4] );
+                }
+                else{ throw new Exception( "l'email existe déja" );                   
                 }
             break;
 
@@ -46,4 +71,5 @@ try{
     ];
     print_r($error);
 }
+
 

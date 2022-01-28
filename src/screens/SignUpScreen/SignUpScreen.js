@@ -4,6 +4,18 @@ import Logo from '../../../assets/images/logo_philsup.png';
 import CustomInPut from '../../components/CustomInPut';
 import CustomButton from '../../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
+import XHR from "../../../utils/XHR";
+
+
+function createUser( firstname, lastname, email, password ){
+    const callToAPI = "inscription/" + lastname + "/" + firstname + "/" + email + "/" + password;
+    let test = ['']
+    XHR( callToAPI, (response) => {
+        test.push(response.data)
+    })
+    console.log(test);
+}
+
 
 const SignUpScreen = () => {
 
@@ -23,6 +35,7 @@ const SignUpScreen = () => {
 
     const onRegisterPressed = () => {
         // créer l'identité de l'utilisateur
+        createUser (firstname, lastname, email, password);
         console.warn('onRegisterPressed');
     };
 
@@ -83,8 +96,22 @@ const SignUpScreen = () => {
                     secureTextEntry
                     />
                     
-                    <CustomButton text="S'inscrire" onPress={onRegisterPressed} type="PRIMARY" />
+                    <CustomButton 
                     
+                    text="S'inscrire"
+                    onPress={onRegisterPressed
+                    type="PRIMARY" />
+                    
+                    /*try {
+                            setLoading(true);
+                            await register(email, password);
+                            navigation.pop();
+                        } catch (e) {
+                            setError(e.message);
+                            setLoading(false);
+                        }}*/
+                    
+
                     <Text style={styles.terms}>
                     By registering, you confirm that you accept our{' '}
                     <Text style={styles.link} onPress={onTermsOfUsePressed}>
