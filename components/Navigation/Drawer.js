@@ -4,8 +4,7 @@ import { SafeAreaView, View, Image, Dimensions } from "react-native";
 import GroupList from '../../views/GroupList';
 import Profile from '../../views/Profile';
 import Search from "../../views/Search";
-import XHR from "../../utils/XHR";
-import HandleSpaceOnSearchBar from "../../utils/Miscellaneous";
+
 
 
 const MyDrawer = createDrawerNavigator(),
@@ -91,6 +90,7 @@ export default class Drawer extends React.Component {
                         children={() => <Profile />}
                         
                     />
+                    
                 </MyDrawer.Navigator>
             </>
         )

@@ -4,7 +4,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import XHR from "../utils/XHR";
 import DateHumanizer from "../utils/DateHumanizer";
 
-const callToAPI = "utilisateurs/2";
+
+
+const callToAPI = "utilisateurs/12";
 
 export default class Profile extends React.Component {
 
@@ -29,13 +31,14 @@ export default class Profile extends React.Component {
                     colors={["rgba(15,117,188, 1)", "rgba(232,90,143, 1)", "rgba(255,127,111, 1)"]}
                     start={{x: 0, y: 0}}
                     end={{x: 1, y: 1}}
-                    locations={[0, 0.7, 1]} 
+                    locations={[0, 0.7, 1]}
                     // useAngle={true} 
                     // angle={90} 
                     // angleCenter={{ x: 0.5, y: 0.5 }}
-                    style={styles.banner} >
+                    style={styles.banner} 
+                >
 
-                    <Image 
+                    <Image
                         style={styles.bannerImage}
                         source={require('../assets/images/avatar.png')}
                     />
@@ -52,17 +55,47 @@ export default class Profile extends React.Component {
     render() {
 
         return(
-                <FlatList
-
-                        ListHeaderComponent={this.renderHeader()}
+            <>
                     
-
-
-
-
+                <FlatList
+                    ListHeaderComponent={this.renderHeader()}
                     data={this.state.data}
+                    style={styles.container}
                     keyExtractor={item => item.email}
                     renderItem={( {item} ) =>
+                    <>
+
+                        {/* <LinearGradient
+                            colors={["rgba(15,117,188, 1)", "rgba(232,90,143, 1)", "rgba(255,127,111, 1)"]}
+                            start={{x: 0, y: 0}}
+                            end={{x: 1, y: 1}}
+                            locations={[0, 0.7, 1]} 
+                            // useAngle={true} 
+                            // angle={90} 
+                            // angleCenter={{ x: 0.5, y: 0.5 }}
+                            style={styles.banner} >
+
+                            <Image 
+                                style={styles.bannerImage}
+                                source={require('../assets/images/avatar.png')}
+                            />
+                        </LinearGradient> */}
+                        <View style={styles.profil}>
+                            <Text style={styles.profilName}>
+                                {item.name} {item.firstname}
+                            </Text>
+                            <Text style={styles.profilJob}>
+                                {item.jobName} - {item.teamName} 
+                            </Text>
+                        </View>
+                        <View style={styles.content}>    
+                            <Text style={styles.titleContent}>
+                                Description :
+                            </Text> 
+                            <Text style={styles.profilContent}>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in dolor elementum, pretium lectus ut, tincidunt ligula. Ut finibus risus sit amet tincidunt aliquam. Nunc varius porta eros, a accumsan augue viverra a. Sed cursus arcu vitae consequat consectetur. 
+                            </Text>
+                        </View>
                         <View style={styles.article}>
                              
                             
@@ -80,21 +113,15 @@ export default class Profile extends React.Component {
                             </Text>
 
                             <Text style={styles.title}>
-                                Equipe : {item.teamName} 
-                            </Text>
-
-                            <Text style={styles.title}>
-                                Equipe : {item.teamName} 
-                            </Text>
-
-                            <Text style={styles.title}>
                                 Métier : {item.jobName} 
                             </Text>
 
                             
                         </View>
+                    </>
                     }
                 />
+            </>    
         )
     }
 }
@@ -102,15 +129,49 @@ export default class Profile extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 20,
-        width:'100%',
+        width: '100%',
         backgroundColor:'#f8f8f8'
     },
     banner:{
         marginTop: 40,
-        height:100,
+        height: 100,
         width:'100%',
         position:'absolute'
+    },
+    profil:{
+        flexWrap: "wrap",
+        top: 140,
+        paddingBottom: 15,
+        marginHorizontal: 15,
+        borderBottomWidth: 2
+        // borderWidth: 2,
+        // borderColor: "blue",
+        
+    },
+    profilName:{
+        fontSize: 24,
+        fontWeight: "bold",
+        paddingBottom: 5
+    },
+    profilJob:{
+        fontSize: 20,
+        fontStyle: "italic",
+    },
+    content:{
+        top: 150,
+        marginHorizontal: 15,
+        // borderWidth: 2,
+        // borderColor: "red"
+    },
+    titleContent:{
+        fontSize: 20,
+        fontWeight: "600",
+        paddingBottom: 9,
+
+    },
+    profilContent:{
+        fontSize: 17,
+        textAlign: "justify"
     },
     bannerImage:{
         position:'relative',
@@ -134,12 +195,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#E7E7E7',
         borderRadius: 10,
         borderStyle: 'solid',
-        borderWidth: 1,
+        borderWidth: 4,
         borderColor: '#fff',
         shadowOffset: { width: 15, height: 15 },
         shadowColor: 'black',
-        shadowOpacity: 1,
-        elevation: 4,
+        shadowOpacity: 0.5,
     },
     title: {
         fontWeight: 'bold',
