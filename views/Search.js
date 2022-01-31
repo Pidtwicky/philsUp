@@ -25,11 +25,6 @@ export default class Search extends React.Component {
             value={inputValue}                                          //value={this.state.myText}
             onChangeText={ text => this.props.updateDatabase(text) }    //onChangeText={(text) => this.setText(text)}   
           />
-      
-
-
-
-
         );
     }
 }
@@ -41,7 +36,7 @@ const styles = StyleSheet.create({
     input: {
         backgroundColor: '#fff',
         marginRight: 20,
-        width: '50%',
+        width: '75%',
 
         paddingTop: 5,
         paddingBottom: 5,

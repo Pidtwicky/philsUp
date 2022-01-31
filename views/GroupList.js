@@ -2,7 +2,6 @@ import React from "react";
 import { Text, FlatList, Image, View, StyleSheet } from "react-native";
 import XHR from "../utils/XHR";
 import HandleSpaceOnSearchBar from "../utils/Miscellaneous";
-import Search from "./Search";
 
 const callToAPI = "groupes";
 
@@ -12,42 +11,31 @@ export default class GroupList extends React.Component {
         super(props);
         this.state = {
             data: [],
-            inputValue: '',
         }
     }
 
     componentDidMount() {
-
         XHR( callToAPI, (response) => {
             this.setState({data: response.data})
         })
-        console.log("je suis dans componentDidMount (Grouplist)");
     }
 
-    updateResearch(searchName){
-        this.setState({inputValue: searchName});
-        console.log("Je fais des mofifications dans la barre de recherche : " + searchName );
-        // console.log("Au meme moment, malgres mon setState sur inputValue, la variable n'est pas encore a jour : " + HandleSpaceOnSearchBar(searchName) );
+    componentDidUpdate(){
 
-        XHR( callToAPI + "/nom/" + HandleSpaceOnSearchBar(searchName), (response) => {
-            this.setState({data: response.data})
-        })
+        if( this.props.triggerUpdate ){
+            const searchName = "/nom/" + this.props.inputValue;
+            XHR( callToAPI + HandleSpaceOnSearchBar(searchName), (response) => {
+                this.setState({data: response.data})
+            })
 
-        console.log("je suis dans updateResearch (Grouplist)");
-
+            this.props.updateIsDone;
+        }
     }
 
     render() {
 
-        const placeholder = "chercher un groupe"
-
         return(
             <View style={styles.container}>
-                <Search
-                    inputValue={this.state.inputValue} // parent vers enfant 
-                    updateDatabase={(searchText) => this.updateResearch(searchText)} // enfant vers parent
-                    placeholder={placeholder}
-                />
                 <FlatList
                     data={this.state.data}
                     renderItem={( {item} ) =>

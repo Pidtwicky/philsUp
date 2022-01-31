@@ -20,35 +20,21 @@ export default class Drawer extends React.Component {
         this.state = {
             data: [],
             inputValue: '',
+            triggerUpdate: false
         }
     }
 
-    componentDidMount() {
-
-        XHR( callToAPI, (response) => {
-            this.setState({data: response.data})
-        })
-        console.log("je suis dans componentDidMount (Drawer)");
+    updateResearch(searchName) {
+        this.setState( {inputValue: searchName, triggerUpdate: true} );  
     }
 
-    updateResearch(searchName){
-        this.setState({inputValue: searchName});
-        console.log("Je fais des mofifications dans la barre de recherche : " + searchName );
-        // console.log("Au meme moment, malgres mon setState sur inputValue, la variable n'est pas encore a jour : " + HandleSpaceOnSearchBar(searchName) );
-
-        XHR( callToAPI + "/nom/" + HandleSpaceOnSearchBar(searchName), (response) => {
-            this.setState({data: response.data})
-        })
-
-        console.log("je suis dans updateResearch (Drawer)");
-
+    updateIsDone() {
+        if( this.state.triggerUpdate ){
+            this.setState( {triggerUpdate: false} ); 
+        }
     }
-
-
 
     render() {
-
-        const placeholder = "Rechercher..."
 
         return (
             <>
@@ -81,23 +67,27 @@ export default class Drawer extends React.Component {
                 >
 
                     <MyDrawer.Screen
-                        name="GroupList"
-                        children={() => <GroupList />}
+                        name="Groupes"
+                        children={() => <GroupList 
+                                            inputValue={this.state.inputValue} 
+                                            triggerUpdate={this.state.triggerUpdate}
+                                            updateIsDone={this.updateIsDone()}
+                                        />
+                        }
                         options={() => ({
                             title: 'Groupes',
                             headerRight: () => (
                                 <Search
-                                inputValue={this.state.inputValue} // parent vers enfant 
-                                updateDatabase={(searchText) => this.updateResearch(searchText)} // enfant vers parent
-                                placeholder={placeholder}
-                            />
+                                    inputValue={this.state.inputValue} // parent vers enfant 
+                                    updateDatabase={(searchText) => this.updateResearch(searchText)} // enfant vers parent
+                                    placeholder={"Chercher un groupe"}
+                                />
                             ),
                         })}
-                        
                     />
                     
                     <MyDrawer.Screen
-                        name="Profile"
+                        name="Profil"
                         children={() => <Profile />}
                         
                     />
