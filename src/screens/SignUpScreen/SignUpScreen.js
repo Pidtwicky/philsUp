@@ -99,18 +99,8 @@ const SignUpScreen = () => {
                     <CustomButton 
                     
                     text="S'inscrire"
-                    onPress={onRegisterPressed
+                    onPress={onRegisterPressed}
                     type="PRIMARY" />
-                    
-                    /*try {
-                            setLoading(true);
-                            await register(email, password);
-                            navigation.pop();
-                        } catch (e) {
-                            setError(e.message);
-                            setLoading(false);
-                        }}*/
-                    
 
                     <Text style={styles.terms}>
                     By registering, you confirm that you accept our{' '}

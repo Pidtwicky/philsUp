@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { View, Text, Image, StyleSheet, useWindowDimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, useWindowDimensions, Alert } from 'react-native';
 import Logo from '../../../assets/images/logo_philsup.png';
 import CustomInPut from '../../components/CustomInPut';
 import CustomButton from '../../components/CustomButton';
@@ -13,7 +13,7 @@ const SignInScreen = () => {
     const {height} = useWindowDimensions();
     const navigation = useNavigation();
 
-    const onSignInPressed = () => {
+    const onSignInPressed = async data => {
         // validation de l'identité de l'utilisateur
         navigation.navigate('Feed')
     };
