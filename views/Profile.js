@@ -97,7 +97,6 @@ export default class Profile extends React.Component {
                             </Text>
                         </View>
                         <View style={styles.article}>
-                             
                             
                             <Text style={styles.title}>
                                 

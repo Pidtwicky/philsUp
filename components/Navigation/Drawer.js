@@ -29,7 +29,7 @@ export default class Drawer extends React.Component {
 
     updateIsDone() {
         if( this.state.triggerUpdate ){
-            this.setState( {triggerUpdate: false} ); 
+            this.setState( {triggerUpdate: false} );
         }
     }
 
