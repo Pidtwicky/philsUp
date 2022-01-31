@@ -95,8 +95,17 @@ export default class Profile extends React.Component {
                             <Text style={styles.profilContent}>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in dolor elementum, pretium lectus ut, tincidunt ligula. Ut finibus risus sit amet tincidunt aliquam. Nunc varius porta eros, a accumsan augue viverra a. Sed cursus arcu vitae consequat consectetur. 
                             </Text>
+                            <Text style={styles.titleContent}>
+                                Adresse mail :
+                            </Text>
+                            <Text>
+                                ramelclement@philsup.com
+                            </Text>
                         </View>
-                        <View style={styles.article}>
+                        <View style={styles.po}>
+                            
+                        </View>
+                        {/* <View style={styles.article}>
                             
                             <Text style={styles.title}>
                                 
@@ -116,7 +125,7 @@ export default class Profile extends React.Component {
                             </Text>
 
                             
-                        </View>
+                        </View> */}
                     </>
                     }
                 />
@@ -165,8 +174,7 @@ const styles = StyleSheet.create({
     titleContent:{
         fontSize: 20,
         fontWeight: "600",
-        paddingBottom: 9,
-
+        paddingVertical: 15
     },
     profilContent:{
         fontSize: 17,
