@@ -29,13 +29,14 @@ export default class Profile extends React.Component {
                     colors={["rgba(15,117,188, 1)", "rgba(232,90,143, 1)", "rgba(255,127,111, 1)"]}
                     start={{x: 0, y: 0}}
                     end={{x: 1, y: 1}}
-                    locations={[0, 0.7, 1]} 
+                    locations={[0, 0.7, 1]}
                     // useAngle={true} 
                     // angle={90} 
                     // angleCenter={{ x: 0.5, y: 0.5 }}
-                    style={styles.banner} >
+                    style={styles.banner} 
+                >
 
-                    <Image 
+                    <Image
                         style={styles.bannerImage}
                         source={require('../assets/images/avatar.png')}
                     />
@@ -54,17 +55,29 @@ export default class Profile extends React.Component {
         return(
                 <FlatList
 
-                        ListHeaderComponent={this.renderHeader()}
-                    
-
-
-
-
+                   // ListHeaderComponent={this.renderHeader()}
                     data={this.state.data}
                     keyExtractor={item => item.email}
                     renderItem={( {item} ) =>
+
+                    <>
+                        <LinearGradient
+                            colors={["rgba(15,117,188, 1)", "rgba(232,90,143, 1)", "rgba(255,127,111, 1)"]}
+                            start={{x: 0, y: 0}}
+                            end={{x: 1, y: 1}}
+                            locations={[0, 0.7, 1]}
+                            // useAngle={true} 
+                            // angle={90} 
+                            // angleCenter={{ x: 0.5, y: 0.5 }}
+                            style={styles.banner} 
+                        >
+                            <Image
+                                style={styles.bannerImage}
+                                source={require('../assets/images/avatar.png')}
+                            />
+                        </LinearGradient>
+
                         <View style={styles.article}>
-                             
                             
                             <Text style={styles.title}>
                                 
@@ -80,19 +93,12 @@ export default class Profile extends React.Component {
                             </Text>
 
                             <Text style={styles.title}>
-                                Equipe : {item.teamName} 
-                            </Text>
-
-                            <Text style={styles.title}>
-                                Equipe : {item.teamName} 
-                            </Text>
-
-                            <Text style={styles.title}>
                                 Métier : {item.jobName} 
                             </Text>
 
                             
                         </View>
+                    </>
                     }
                 />
         )
