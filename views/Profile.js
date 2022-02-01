@@ -1,12 +1,14 @@
 import React from "react";
-import { Text, FlatList, ScrollView, Image, View, StyleSheet } from "react-native";
+import { Text, FlatList, ScrollView, Image, View, StyleSheet, Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import XHR from "../utils/XHR";
-import DateHumanizer from "../utils/DateHumanizer";
+
 
 
 
 const callToAPI = "utilisateurs/12";
+const winHeight = Dimensions.get('window').height;
+const winWidth = Dimensions.get('window').width;
 
 export default class Profile extends React.Component {
 
@@ -38,15 +40,14 @@ export default class Profile extends React.Component {
                     style={styles.banner} 
                 >
 
-                    <Image
-                        style={styles.bannerImage}
-                        source={require('../assets/images/avatar.png')}
-                    />
                 </LinearGradient>
 
                 {/* Force l'affichage du RenderHeader */}
                 <View>
-                    <Text></Text>
+                    <Image
+                        style={styles.bannerImage}
+                        source={require('../assets/images/avatar.png')}
+                    />
                 </View>
             </>
         );
@@ -137,18 +138,18 @@ export default class Profile extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: '100%',
+        width: winWidth,
         backgroundColor:'#f8f8f8'
     },
     banner:{
         marginTop: 40,
-        height: 100,
-        width:'100%',
-        position:'absolute'
+        height: winHeight / 7.5,
+        width: winWidth,
+        position:'absolute',
     },
     profil:{
         flexWrap: "wrap",
-        top: 140,
+        top: winHeight / 7,
         paddingBottom: 15,
         marginHorizontal: 15,
         borderBottomWidth: 2
@@ -182,8 +183,8 @@ const styles = StyleSheet.create({
     },
     bannerImage:{
         position:'relative',
-        top:50,
-        left:50,
+        top:90,
+        left:40,
         height:100,
         width:100,
         backgroundColor:'#f8f8f8',
