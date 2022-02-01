@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     },
     banner:{
         marginTop: 40,
-        height: winHeight / 7.5,
+        height: winWidth / 4,
         width: winWidth,
         position:'absolute',
     },
