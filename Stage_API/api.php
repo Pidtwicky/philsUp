@@ -66,7 +66,7 @@ function getUsers(){
 
 function getUserInformationById( $id ){
     $pdo = getConnexion();
-    $query =   "    SELECT job.name jobName, team.name teamName, email, information.name, firstname, birthday FROM user
+    $query =   "    SELECT job.name jobName, team.name teamName, email, information.name, firstname FROM user
                     INNER JOIN information ON user.id = information.id
                     INNER JOIN job ON job.id = user.job_id
                     INNER JOIN team on team.id = user.team_id
@@ -98,5 +98,5 @@ function getGroupByName( $name ){
 }
 
 function getConnexion(){
-    return new PDO("mysql:host=localhost;dbname=stage_philiance;charset=utf8", "root", "root");
+    return new PDO("mysql:host=localhost;dbname=stage_philiance;charset=utf8", "root", "");
 }

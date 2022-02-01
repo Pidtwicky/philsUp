@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, FlatList, ScrollView, Image, View, StyleSheet } from "react-native";
+import { Text, FlatList, ScrollView, Image, View, StyleSheet, Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import XHR from "../utils/XHR";
 import DateHumanizer from "../utils/DateHumanizer";
@@ -7,6 +7,9 @@ import DateHumanizer from "../utils/DateHumanizer";
 
 
 const callToAPI = "utilisateurs/12";
+const winHeight = Dimensions.get('window').height;
+const winWidth = Dimensions.get('window').width;
+
 
 export default class Profile extends React.Component {
 
@@ -142,7 +145,7 @@ const styles = StyleSheet.create({
     },
     banner:{
         marginTop: 40,
-        height: 100,
+        height: winHeight / 7.5,
         width:'100%',
         position:'absolute'
     },
