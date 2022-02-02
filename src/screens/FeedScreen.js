@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { View, Text, Image, StyleSheet, useWindowDimensions } from 'react-native';
-import Logo from '../../../assets/images/logo_philsup.png';
-import CustomButton from '../../components/CustomButton';
+import Logo from '../../assets/images/logo_philsup.png';
+import CustomButton from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 
 const FeedScreen = () => {
