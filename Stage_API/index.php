@@ -3,7 +3,8 @@
 
 require_once("./api.php");
 
-function handleSpaceFromURL($search){
+function handleSpaceFromURL($search)
+{
 
     $res = str_replace("~*-", " ", $search);
     return $res;
@@ -19,57 +20,54 @@ function handleSpaceFromURL($search){
 //www.monsite.fr/formation/id                      CAS 3
 // => www.monsite.fr/index.php?myRequest=formations/id
 
-try{
-    if( !empty( $_GET["myRequest"] ) ){
-        $url = explode( "/", filter_var( $_GET["myRequest"], FILTER_SANITIZE_URL ) );
-        switch( $url[0] ){
+try {
+    if (!empty($_GET["myRequest"])) {
+        $url = explode("/", filter_var($_GET["myRequest"], FILTER_SANITIZE_URL));
+        switch ($url[0]) {
             case "groupes":
-                if( empty($url[1]) ){ //CAS 1 - empty
+                if (empty($url[1])) { //CAS 1 - empty
                     getGroups();
-                }
-                else{
-                    if( $url[1] === "nom" ){
-                        
-                        getGroupByName( handleSpaceFromURL($url[2]) );
-                    }
-                    else{
-                        getGroupContent( $url[1] );
+                } else {
+                    if ($url[1] === "nom") {
+
+                        getGroupByName(handleSpaceFromURL($url[2]));
+                    } else {
+                        getGroupContent($url[1]);
                     }
                 }
-            break;
+                break;
 
             case "utilisateurs":
-                if( empty($url[1]) ){ //CAS 1 - empty
+                if (empty($url[1])) { //CAS 1 - empty
                     getUsers();
+                } else {
+                    getUserInformationById($url[1]);
                 }
-                else{
-                    getUserInformationById( $url[1] );
-                }
-            break;
+                break;
 
             case "inscription":
-                if( checkEmail($url[3]) ){ //CAS 1 - empty
+                if (checkEmail($url[3])) { //CAS 1 - empty
                     echo ('inscription');
-                    createUser( $url[1], $url[2], $url[3], $url[4] );
+                    createUser($url[1], $url[2], $url[3], $url[4]);
+                } else {
+                    throw new Exception("l'email existe déja");
                 }
-                else{ throw new Exception( "l'email existe déja" );                   
-                }
-            break;
+                break;
+
+            case "connexion":
+                checkLogin($url[1], $url[2]);
+                break;
 
             default:
                 throw new Exception("Le 1er élement de ton chemin n'a pas été traité dans dans la condition Switch() de ton fichier index.php (celui du dossier de l'API), vérifie ton URL ou ajoute le Case correspondant, et tu sera un gros roxxor ;) - Ha ! Oublie pas de créer une fonction qui fait un appel a la base de donnes dans le fichier api.php aussi!");
-
         }
+    } else {
+        throw new Exception("Tu as donné un chemin vide patate !");
     }
-    else{
-        throw new Exception( "Tu as donné un chemin vide patate !" );
-    }
-}catch( Exception $e ){
+} catch (Exception $e) {
     $error = [
         "message"   => $e->getMessage(),
         "code"      => $e->getCode()
     ];
     print_r($error);
 }
-
-

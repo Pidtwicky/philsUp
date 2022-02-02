@@ -1,27 +1,30 @@
 <?php
 
-define( "URL", str_replace("index.php", "", ( isset($_SERVER["HTTPS"])? "https" : "http" )."://".$_SERVER["HTTP_HOST"].$_SERVER["PHP_SELF"] )); //point over site's root url
+define("URL", str_replace("index.php", "", (isset($_SERVER["HTTPS"]) ? "https" : "http") . "://" . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"])); //point over site's root url
 
-function sendJSON($infos){
+function sendJSON($infos)
+{
 
     $infos = transformIntoDataForReact($infos);
-    
+
     header('Accept: application/json');
     header("Acces-Control-Allow-Origin: *");           //specify who can access to the data
     header("Content-Type: application/json");          //specify which kind of data type is sent 
     echo json_encode($infos, JSON_UNESCAPED_UNICODE);
 }
 
-function transformIntoDataForReact($infos){
+function transformIntoDataForReact($infos)
+{
 
     // $infos = "{'data':" . $infos . ",'error':null}";
-    
-    $data = array('data'=>$infos);
+
+    $data = array('data' => $infos);
 
     return $data;
 }
 
-function getGroups(){
+function getGroups()
+{
     $pdo = getConnexion();
     $query =   "SELECT * FROM .group";
 
@@ -33,7 +36,8 @@ function getGroups(){
     sendJSON($groups);
 }
 
-function getGroupContent( $id ){
+function getGroupContent($id)
+{
     $pdo = getConnexion();
     $query =   "    SELECT * FROM message 
                     INNER JOIN .group ON .group.id = message.group_entity_id
@@ -47,7 +51,8 @@ function getGroupContent( $id ){
     sendJSON($groups);
 }
 
-function getUsers(){
+function getUsers()
+{
     $query =   "SELECT * FROM user";
     $pdo = getConnexion();
 
@@ -64,7 +69,8 @@ function getUsers(){
     sendJSON($users);
 }
 
-function getUserInformationById( $id ){
+function getUserInformationById($id)
+{
     $pdo = getConnexion();
     $query =   "    SELECT job.name jobName, team.name teamName, email, information.name, firstname FROM user
                     INNER JOIN information ON user.id = information.id
@@ -77,13 +83,14 @@ function getUserInformationById( $id ){
     $user = $statement->fetchAll(PDO::FETCH_ASSOC);
 
     // $user["image"] = URL."assets/images/users/".$user["image"];
-    
+
 
     $statement->closeCursor();
     sendJSON($user);
 }
 
-function getGroupByName( $name ){
+function getGroupByName($name)
+{
 
     $pdo = getConnexion();
     $query =        "   SELECT * FROM `group`
@@ -97,13 +104,15 @@ function getGroupByName( $name ){
     sendJSON($group);
 }
 
-function checkEmail( $email ) {
+function checkEmail($email)
+{
 
     // $email = htmlentities(['email'])
     return true;
 }
 
-function createUser ( $firstname, $name, $email, $password ) {
+function createUser($firstname, $name, $email, $password)
+{
 
     $pdo = getConnexion();
     $query =       "   INSERT INTO `user` ( `email`, `password`) 
@@ -112,13 +121,32 @@ function createUser ( $firstname, $name, $email, $password ) {
                         INSERT INTO `information` ( `name` , `firstname`, `user_entity_id` )
                         VALUES ('$name' , '$firstname' , ( SELECT `id` FROM `user` WHERE `email` = '$email'))";
 
-   
+
     $statement = $pdo->prepare($query);
     $statement->execute();
     $statement->closeCursor();
 }
 
+function checkLogin($email, $password)
+{
 
-function getConnexion(){
-    return new PDO("mysql:host=localhost;dbname=stage_philiance;charset=utf8", "root", ""); 
+    $pdo = getConnexion();
+    $query =   "    SELECT id FROM user
+                    WHERE `password` = '$password' AND email = '$email' ";
+
+    $statement = $pdo->prepare($query);
+    $statement->execute();
+    $user = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    // $user["image"] = URL."assets/images/users/".$user["image"];
+
+
+    $statement->closeCursor();
+    sendJSON($user);
+}
+
+
+function getConnexion()
+{
+    return new PDO("mysql:host=localhost;dbname=stage_philiance;charset=utf8", "root", "");
 }
