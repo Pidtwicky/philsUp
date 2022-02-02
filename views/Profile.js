@@ -1,14 +1,13 @@
 import React from "react";
-import { Text, FlatList, ScrollView, Image, View, StyleSheet, Dimensions } from "react-native";
+import { Text, FlatList, Image, View, StyleSheet, Platform, Dimensions, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import XHR from "../utils/XHR";
 
 
 
-
-const callToAPI = "utilisateurs/12";
 const winHeight = Dimensions.get('window').height;
 const winWidth = Dimensions.get('window').width;
+const callToAPI = "utilisateurs/12";
 
 export default class Profile extends React.Component {
 
@@ -40,6 +39,7 @@ export default class Profile extends React.Component {
                     style={styles.banner} 
                 >
 
+                    
                 </LinearGradient>
 
                 {/* Force l'affichage du RenderHeader */}
@@ -81,31 +81,31 @@ export default class Profile extends React.Component {
                                 source={require('../assets/images/avatar.png')}
                             />
                         </LinearGradient> */}
-                        <View style={styles.profil}>
-                            <Text style={styles.profilName}>
-                                {item.name} {item.firstname}
-                            </Text>
-                            <Text style={styles.profilJob}>
-                                {item.jobName} - {item.teamName} 
-                            </Text>
-                        </View>
-                        <View style={styles.content}>    
-                            <Text style={styles.titleContent}>
-                                Description :
-                            </Text> 
-                            <Text style={styles.profilContent}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in dolor elementum, pretium lectus ut, tincidunt ligula. Ut finibus risus sit amet tincidunt aliquam. Nunc varius porta eros, a accumsan augue viverra a. Sed cursus arcu vitae consequat consectetur. 
-                            </Text>
-                            <Text style={styles.titleContent}>
-                                Adresse mail :
-                            </Text>
-                            <Text>
-                                ramelclement@philsup.com
-                            </Text>
-                        </View>
-                        <View style={styles.po}>
-                            
-                        </View>
+                        <ScrollView>
+                            <View style={styles.profil}>
+                                <Text style={styles.profilName}>
+                                    {item.name} {item.firstname}
+                                </Text>
+                                <Text style={styles.profilJob}>
+                                    {item.jobName} - {item.teamName} 
+                                </Text>
+                            </View>
+                            <View style={styles.content}>    
+                                <Text style={styles.titleContent}>
+                                    Description :
+                                </Text> 
+                                <Text style={styles.profilContent}>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in dolor elementum, pretium lectus ut, tincidunt ligula. Ut finibus risus sit amet tincidunt aliquam. Nunc varius porta eros, a accumsan augue viverra a. Sed cursus arcu vitae consequat consectetur. 
+                                </Text>
+                                <Text style={styles.titleContent}>
+                                    Adresse mail :
+                                </Text>
+                                <Text>
+                                    ramelclement@philsup.com
+                                </Text>
+                            </View>
+
+                        </ScrollView>
                         {/* <View style={styles.article}>
                             
                             <Text style={styles.title}>
@@ -138,18 +138,17 @@ export default class Profile extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: winWidth,
+        width: '100%',
         backgroundColor:'#f8f8f8'
     },
     banner:{
-        marginTop: 40,
-        height: winWidth / 4,
-        width: winWidth,
-        position:'absolute',
+        height: winHeight / 9,
+        width:'100%',
+        position:'absolute'
     },
     profil:{
         flexWrap: "wrap",
-        top: winHeight / 7,
+        top: 70,
         paddingBottom: 15,
         marginHorizontal: 15,
         borderBottomWidth: 2
@@ -167,7 +166,7 @@ const styles = StyleSheet.create({
         fontStyle: "italic",
     },
     content:{
-        top: 150,
+        top: 10,
         marginHorizontal: 15,
         // borderWidth: 2,
         // borderColor: "red"
@@ -183,8 +182,8 @@ const styles = StyleSheet.create({
     },
     bannerImage:{
         position:'relative',
-        top:90,
-        left:40,
+        top:50,
+        left:50,
         height:100,
         width:100,
         backgroundColor:'#f8f8f8',
