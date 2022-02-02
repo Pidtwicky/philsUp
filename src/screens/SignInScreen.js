@@ -29,31 +29,32 @@ export default class SignInScreen extends React.Component{
         
             if (this.state.allFieldsCompleted === true){
                 let callToAPI = 'connexion/' + this.state.inputEmail + '/' + this.state.inputPassword;
-                    console.log('affiche call to api:' + callToAPI)
                 XHR( callToAPI, (response) => {
-                    this.setState({data: response.data,allFieldsCompleted:false, isDataFound:true})
-                
+                    this.setState({data: response.data,allFieldsCompleted:false, isDataFound:true})                
                 })    
-
             }
+
             if (this.state.isDataFound==true) {
                 console.log('je suis dans ma condition')
-                if (this.state.data.length!=0) 
-                console.log('id a ete trouvé');
+                if (this.state.data.length!=0) {
+                    //console.log('id a ete trouvé');
+                    this.props.navigation.navigate('Feed');
+                }
+                
                 else 
-                console.log('pas trouvé d\'idées')
+                    console.warn('Indentifiants Incorrects')
+                
                 this.setState({isDataFound:false})
+                
             }
 
-            }
+    }
 
     login(){
         // validation de l'identité de l'utilisateur
         //console.log("SingIn - onSignInPressed -> dirige vers la page Feed");
-        if( this.state.allFieldsCompleted == true )
-        {
-            console.warn('Appel a la base de données');
-        }
+        if( this.state.inputEmail != "" && this.state.inputPassword != "")
+        this.setState( { allFieldsCompleted:true } );
         else{
             console.warn('Vous devez entrer vos informations pour vous connecter');
         }
@@ -74,9 +75,6 @@ export default class SignInScreen extends React.Component{
         else if( inputOrigin === "password"){
             this.setState( {inputPassword: inputText} );
         }
-
-        if( this.state.inputEmail != "" && this.state.inputPassword != "")
-            this.setState( { allFieldsCompleted:true } );
     }
 
     render(){

@@ -106,9 +106,20 @@ function getGroupByName($name)
 
 function checkEmail($email)
 {
+    $pdo = getConnexion();
+    $query = " SELECT id FROM user WHERE user.email = '$email' ";
 
-    // $email = htmlentities(['email'])
-    return true;
+    $statement = $pdo->prepare($query);
+    $statement->execute();
+    $id = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    $statement->closeCursor();
+    sendJSON($id);
+
+    if (empty($id)) {
+        return true;
+    }
+    return false;
 }
 
 function createUser($firstname, $name, $email, $password)

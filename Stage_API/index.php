@@ -47,10 +47,7 @@ try {
 
             case "inscription":
                 if (checkEmail($url[3])) { //CAS 1 - empty
-                    echo ('inscription');
                     createUser($url[1], $url[2], $url[3], $url[4]);
-                } else {
-                    throw new Exception("l'email existe déja");
                 }
                 break;
 

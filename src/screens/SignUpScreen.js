@@ -17,45 +17,59 @@ export default class SignUpScreen extends React.Component{
             inputFirstname: '',
             inputLastname: '',
             inputEmail: '',
-            inputPassword: ''
+            inputPassword: '',
+            allFieldsCompleted:false
         }
     }
 
+
     onSignInPress(){
+
         // renvoyer sur la page login/se connecter
         this.props.navigation.navigate('SignIn');
     }
 
     onRegisterPressed(){
         // créer l'identité de l'utilisateur
-        this.createUser ();
-        console.warn('onRegisterPressed');
+        if  ( this.state.inputLastname != "" && this.state.inputFirstname != "" && this.state.inputEmail != "" && this.state.inputPassword != ""){
+            this.createUser ();
+            console.log('touts les champs sont remplis')
+        }
+        
+        else{
+            console.warn('touts les champs sont requis')
+        }
     }
 
     createUser(){
-        let firstname = this.props.inputFirstname;
+        let firstname = this.state.inputFirstname;
         let lastname =  this.state.inputLastname;
         let email =     this.state.inputEmail;
-        let password =  this.state.password; 
+        let password =  this.state.inputPassword; 
+        let test = [];
 
         const callToAPI = "inscription/" + lastname + "/" + firstname + "/" + email + "/" + password;
-        let test = ['']
         XHR( callToAPI, (response) => {
-            this.setState( {data: response.data});
+             test  = response.data;
+             if (test.length === 0){
+                this.props.navigation.navigate('SignIn');
+             }
+             else
+             console.warn('Cet email existe deja') 
+             console.log(test)
         })
-        console.log(test);
     }
 
     handleInputValue( inputText, inputOrigin){
 
         if( inputOrigin === "firstname"){
-            this.setState( {inputEmail: inputText} );
+            this.setState( {inputFirstname: inputText} );
         }
         else if( inputOrigin === "lastname"){
-            this.setState( {inputPassword: inputText} );
+            this.setState( {inputLastname: inputText} );
         }
         else if( inputOrigin === "email"){
-            this.setState( {inputPassword: inputText} );
+            this.setState( {inputEmail: inputText} );
         }
         else if( inputOrigin === "password"){
             this.setState( {inputPassword: inputText} );
