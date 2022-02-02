@@ -1,5 +1,5 @@
 
-const DOMAIN = "http://192.168.1.163:80/test/philsUp/Stage_API/";
+const DOMAIN = "http://192.168.1.72:80/PhillsUp/philsUp/Stage_API;";
 
 export default function XHR(pathRequest, callback) {
 
