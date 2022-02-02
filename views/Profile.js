@@ -9,6 +9,12 @@ const winHeight = Dimensions.get('window').height;
 const winWidth = Dimensions.get('window').width;
 const callToAPI = "utilisateurs/12";
 
+function support(ios, android) {
+
+    return (Platform.OS === 'ios') ? ios : android;
+    
+}
+
 export default class Profile extends React.Component {
 
     constructor(props) {
@@ -56,81 +62,78 @@ export default class Profile extends React.Component {
     render() {
 
         return(
-            <>
-                    
-                <FlatList
-                    ListHeaderComponent={this.renderHeader()}
-                    data={this.state.data}
-                    style={styles.container}
-                    keyExtractor={item => item.email}
-                    renderItem={( {item} ) =>
-                    <>
+          
+            <FlatList
+                ListHeaderComponent={this.renderHeader()}
+                data={this.state.data}
+                style={styles.container}
+                keyExtractor={item => item.email}
+                renderItem={( {item} ) =>
+                <>
 
-                        {/* <LinearGradient
-                            colors={["rgba(15,117,188, 1)", "rgba(232,90,143, 1)", "rgba(255,127,111, 1)"]}
-                            start={{x: 0, y: 0}}
-                            end={{x: 1, y: 1}}
-                            locations={[0, 0.7, 1]} 
-                            // useAngle={true} 
-                            // angle={90} 
-                            // angleCenter={{ x: 0.5, y: 0.5 }}
-                            style={styles.banner} >
+                    {/* <LinearGradient
+                        colors={["rgba(15,117,188, 1)", "rgba(232,90,143, 1)", "rgba(255,127,111, 1)"]}
+                        start={{x: 0, y: 0}}
+                        end={{x: 1, y: 1}}
+                        locations={[0, 0.7, 1]} 
+                        // useAngle={true} 
+                        // angle={90} 
+                        // angleCenter={{ x: 0.5, y: 0.5 }}
+                        style={styles.banner} >
 
-                            <Image 
-                                style={styles.bannerImage}
-                                source={require('../assets/images/avatar.png')}
-                            />
-                        </LinearGradient> */}
-                        <ScrollView>
-                            <View style={styles.profil}>
-                                <Text style={styles.profilName}>
-                                    {item.name} {item.firstname}
-                                </Text>
-                                <Text style={styles.profilJob}>
-                                    {item.jobName} - {item.teamName} 
-                                </Text>
-                            </View>
-                            <View style={styles.content}>    
-                                <Text style={styles.titleContent}>
-                                    Description :
-                                </Text> 
-                                <Text style={styles.profilContent}>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in dolor elementum, pretium lectus ut, tincidunt ligula. Ut finibus risus sit amet tincidunt aliquam. Nunc varius porta eros, a accumsan augue viverra a. Sed cursus arcu vitae consequat consectetur. 
-                                </Text>
-                                <Text style={styles.titleContent}>
-                                    Adresse mail :
-                                </Text>
-                                <Text>
-                                    ramelclement@philsup.com
-                                </Text>
-                            </View>
-
-                        </ScrollView>
-                        {/* <View style={styles.article}>
-                            
-                            <Text style={styles.title}>
-                                
+                        <Image 
+                            style={styles.bannerImage}
+                            source={require('../assets/images/avatar.png')}
+                        />
+                    </LinearGradient> */}
+                    <ScrollView style={[styles.container, {height: winHeight * 0.9, width: winWidth}]}>
+                        <View style={[styles.profil, {height: winHeight * 0.9, width: winWidth}]}>
+                            <Text style={styles.profilName}>
                                 {item.name} {item.firstname}
                             </Text>
-
-                            <Text style={styles.title}>
-                                née le {DateHumanizer(item.birthday)}
+                            <Text style={styles.profilJob}>
+                                {item.jobName} - {item.teamName} 
+                            </Text>
+                            <Text style={styles.titleContent}>
+                                Description :
                             </Text> 
-
-                            <Text style={styles.title}>
-                                Equipe : {item.teamName} 
+                            <Text style={styles.profilContent}>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in dolor elementum, pretium lectus ut, tincidunt ligula. Ut finibus risus sit amet tincidunt aliquam. Nunc varius porta eros, a accumsan augue viverra a. Sed cursus arcu vitae consequat consectetur. 
                             </Text>
-
-                            <Text style={styles.title}>
-                                Métier : {item.jobName} 
+                            <Text style={styles.titleContent}>
+                                Adresse mail :
                             </Text>
+                            <Text>
+                                ramelclement@philsup.com
+                            </Text>
+                        </View>    
 
+                    </ScrollView>
+                    {/* <View style={styles.article}>
+                        
+                        <Text style={styles.title}>
                             
-                        </View> */}
-                    </>
-                    }
-                />
-            </>    
+                            {item.name} {item.firstname}
+                        </Text>
+
+                        <Text style={styles.title}>
+                            née le {DateHumanizer(item.birthday)}
+                        </Text> 
+
+                        <Text style={styles.title}>
+                            Equipe : {item.teamName} 
+                        </Text>
+
+                        <Text style={styles.title}>
+                            Métier : {item.jobName} 
+                        </Text>
+
+                        
+                    </View> */}
+                </>
+                }
+            />  
+               
         )
     }
 }
@@ -138,17 +141,17 @@ export default class Profile extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: '100%',
+        flexWrap: "wrap",
         backgroundColor:'#f8f8f8'
     },
     banner:{
         height: winHeight / 9,
-        width:'100%',
+        width: support("50%", "100%"),
         position:'absolute'
     },
     profil:{
         flexWrap: "wrap",
-        top: 70,
+        top: 100,
         paddingBottom: 15,
         marginHorizontal: 15,
         borderBottomWidth: 2
@@ -182,7 +185,7 @@ const styles = StyleSheet.create({
     },
     bannerImage:{
         position:'relative',
-        top:50,
+        top:(Platform.OS === 'ios') ? 50 : 20,
         left:50,
         height:100,
         width:100,
