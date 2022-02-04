@@ -76,13 +76,14 @@ const styles = StyleSheet.create({
         elevation: 4,
     },
     title: {
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
         fontSize: 24,
         textAlign: 'center',
         paddingBottom: 20,
         borderStyle: 'solid',
         borderBottomWidth: 1,
         borderBottomColor: '#fff',
+        fontFamily: 'HoneyFloristPersonalUse'
     },
     author_date: {
         marginTop: 10,
