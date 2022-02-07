@@ -4,6 +4,7 @@ import { SafeAreaView, View, Image, Dimensions } from "react-native";
 import GroupList from '../../views/GroupList';
 import Profile from '../../views/Profile';
 import Search from "../../views/Search";
+import FeedScreen from "../../src/screens/FeedScreen";
 
 
 
@@ -64,6 +65,26 @@ export default class Drawer extends React.Component {
                         )
                     }}
                 >
+                    <MyDrawer.Screen
+                        name="Feed"
+                        children={() => <FeedScreen 
+                                            inputValue={this.state.inputValue} 
+                                            triggerUpdate={this.state.triggerUpdate}
+                                            updateIsDone={this.updateIsDone()}
+                                        />
+                        }
+                        options={() => ({
+                            title: 'Feed',
+                            headerRight: () => (
+                                <Search
+                                    inputValue={this.state.inputValue} // parent vers enfant 
+                                    updateDatabase={(searchText) => this.updateResearch(searchText)} // enfant vers parent
+                                    placeholder={"Chercher un groupe"}
+                                />
+                            ),
+                            headerTitleAlign: "left",
+                        })}
+                    />
 
                     <MyDrawer.Screen
                         name="Groupes"
