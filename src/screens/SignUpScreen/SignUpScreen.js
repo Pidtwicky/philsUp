@@ -1,12 +1,32 @@
-import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView, TextInput } from 'react-native';
+import React from "react";
+import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native';
 import Logo from '../../../assets/images/logo_philsup.png';
-import CustomInPut from '../../components/CustomInPut';
+// import CustomInPut from '../../components/CustomInPut';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import XHR from "../../../utils/XHR";
-import * as Yup from 'yup';
+
+
+// ------------------------------------
+import AppText from "../../components/AppText";
 import { Formik } from "formik";
+import * as Yup from "yup";
+import { TextInput } from "react-native";
+
+
+
+
+const validationSchema = Yup.object().shape({
+    email: Yup.string().required().email().label("Email"),
+    password: Yup.string().required().min(4).label("Password"),
+    prenom: Yup.string().required().label("Prenom"),
+    nom: Yup.string().required().label("Nom")
+});
+
+
+
+
+
 
 function createUser(firstname, lastname, email, password) {
     const callToAPI = "inscription/" + lastname + "/" + firstname + "/" + email + "/" + password;
@@ -20,10 +40,6 @@ function createUser(firstname, lastname, email, password) {
 
 const SignUpScreen = () => {
 
-    const [firstname, setFirstname] = useState('');
-    const [lastname, setLastname] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
 
 
     const { height } = useWindowDimensions();
@@ -47,17 +63,13 @@ const SignUpScreen = () => {
     const onPrivacyPressed = () => {
         console.warn('onPrivacyPressed');
     };
-    const validationSchema = Yup.object().shape({
-        email: Yup.string().required().email().text("")
-
-    })
 
     return (
 
         <ScrollView showsVerticalScrollIndicator={false} >
 
-            <View>
-
+            <>
+                {/* ==========================[logo ]========================== */}
                 <View style={styles.root} >
 
                     <Text style={styles.h1}>Créer un compte</Text>
@@ -70,58 +82,80 @@ const SignUpScreen = () => {
                 </View>
 
 
-                <Formik initialValue={{ email: "" }}
+
+
+                <Formik
+                    initialValues={{ email: "", password: "", prenom: "", nom: "" }}
                     onSubmit={(value) => console.log(value)}
+                    validationSchema={validationSchema}
                 >
-
-                    {({ handleChange, handleSubmit }) => (
-
-
-
-
-
-                        <View>
-
+                    {({ handleChange, handleSubmit, errors }) => (
+                        <>
+                            {/* =============================[ NOM ]======================= */}
                             <Text style={styles.text}>Nom</Text>
-                            <CustomInPut
-                                placeholder='Ex: Smith'
-                                value={lastname}
-                                setValue={setLastname}
 
-
-                            />
-
-
-                            <Text style={styles.text}>Prénom</Text>
-                            <CustomInPut
-                                placeholder='Ex: John'
-                                value={firstname}
-                                setValue={setFirstname}
-                            />
-
-                            <Text style={styles.text} >Adresse email  {error.email}</Text>
                             <TextInput
-                                placeholder='Ex: phils@up.com'
-                                value={email}
-                                setValue={setEmail}
-                                onChangeText={handleChange("email")}
-                                
-
+                                style={styles.container}
+                                placeholder="Nom"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                // keybordType=""
+                                textContentType="" // uniquement IOS
+                                onChangeText={handleChange("nom")}
                             />
+                            <AppText>{errors.nom}</AppText>
+
+                            {/* =================================[ prenom ]==================== */}
+                            <Text style={styles.text}>Prénom</Text>
+
+                            <TextInput
+                                style={styles.container}
+                                placeholder="Prénom"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                // keybordType=""
+                                textContentType="" // uniquement IOS
+                                onChangeText={handleChange("prenom")}
+                            />
+                            <AppText>{errors.prenom}</AppText>
+                            {/* ================[Email]================ */}
+                            <Text style={styles.text}>Adresse email</Text>
+                            <TextInput
+                                style={styles.container}
+                                placeholder="Ex: phils@up.com"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                keybordType="email-adress"
+                                textContentType="emailAddress" // uniquement IOS
+                                onChangeText={handleChange("email")}
+                            />
+
+
+                            <AppText>{errors.email}</AppText>
+
+                            {/* ================[password]============== */}
 
                             <Text style={styles.text}>Mot de passe</Text>
-                            <CustomInPut
-                                placeholder='Tapez votre mot de passe...'
-                                value={password}
-                                setValue={setPassword}
+                            <TextInput
+                                style={styles.container}
+                                placeholder="Tapez votre mot de passe..."
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                keybordType="password"
+                                textContentType="password" // pour IOS
+                                onChangeText={handleChange("password")}
                                 secureTextEntry
                             />
+                            <AppText>{errors.password}</AppText>
 
+
+                            {/* ===========================[se connecter ]===================== */}
                             <CustomButton
 
                                 text="S'inscrire"
-                                onPress={onRegisterPressed}
+                                onPress={handleSubmit}
                                 type="PRIMARY" />
+
 
                             <Text style={styles.terms}>
                                 By registering, you confirm that you accept our{' '}
@@ -138,18 +172,19 @@ const SignUpScreen = () => {
                                 text="Connecte toi"
                                 onPress={onSignInPress}
                                 type="TERTIARY"
-
-                                onPress={handleSubmit}
                             />
 
 
 
-                        </View>
+
+
+
+
+                        </>
+
                     )}
                 </Formik>
-
-            </View>
-
+            </>
         </ScrollView>
     )
 }
@@ -182,6 +217,20 @@ const styles = StyleSheet.create({
     },
     link: {
         color: '#FFA65F',
+    },
+    container: {
+        backgroundColor: "white",
+        width: "80%",
+
+        borderColor: "#303030",
+        borderWidth: 1.5,
+        borderRadius: 100,
+
+        paddingHorizontal: 20,
+        marginVertical: 10,
+        padding: 8,
+
+        alignSelf: "center",
     },
 });
 
