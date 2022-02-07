@@ -1,10 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Drawer from './components/Navigation/Drawer';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
 
+import HomeScreen from './src/screens/HomeScreen';
+import SignInScreen from './src/screens/SignInScreen';
+import SignUpScreen from './src/screens/SignUpScreen';
+import FeedScreen from './src/screens/FeedScreen';
+
+const Stack = createNativeStackNavigator();
 
 export default class App extends React.Component {
 
@@ -36,7 +43,14 @@ export default class App extends React.Component {
 
         return (
             <NavigationContainer>
-                <Drawer />
+                <Stack.Navigator screenOptions={{headerShown: false}}>
+
+                    <Stack.Screen name="HomeScreen" component={HomeScreen} />
+                    <Stack.Screen name="SignIn" component={SignInScreen} />
+                    <Stack.Screen name="SignUp" component={SignUpScreen} />
+                    <Stack.Screen name="Feed" component={Drawer} />
+
+                </Stack.Navigator>
                 <StatusBar style="auto"/>
             </NavigationContainer>
         );
