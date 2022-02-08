@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, FlatList, Image, View, StyleSheet, Platform, Dimensions, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import XHR from "../utils/XHR";
 
 
@@ -8,7 +9,7 @@ import XHR from "../utils/XHR";
 
 const winHeight = Dimensions.get('window').height;
 const winWidth = Dimensions.get('window').width;
-const callToAPI = "utilisateurs/12";
+const callToAPI = "utilisateurs/";
 
 function support(ios, android) {
 
@@ -21,8 +22,24 @@ export default class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            isStorageLoaded: false
         }
+        this.user;
+    }
+
+    async getStoredUser(){  
+        const value = await AsyncStorage.getItem('storeUser');
+
+        /*Option 1 - Enregistre l'id dans les donnée membres de la class (this.user), et toggle la variable d'état */
+        this.user = value;
+        this.setState( {isStorageLoaded:true} )
+
+        /* Option 2 - Appeller directement l'API lorsqu'on reçoit l'id user storé dans la variable de session
+        XHR( callToAPI + value, (response) => {
+            this.setState({data: response.data})
+        })
+        */      
     }
 
     async getStoredUser(){  
@@ -32,14 +49,21 @@ export default class Profile extends React.Component {
     }
     
     componentDidMount() {
+        this.getStoredUser();
+    }
 
-        // let call = callToAPI + JSON.stringify(this.getStoredUser());
-        let call = callToAPI + this.getStoredUser();
-        console.log("Affiche le call API : "+ call);
+    componentDidUpdate() {
 
-        XHR( callToAPI, (response) => {
-            this.setState({data: response.data})
-        })
+        /*Option 1 (suite) - puis lance l'appel à l'API si isStorageLoaded = true */
+        if( this.state.isStorageLoaded ){
+            let call = callToAPI + this.user;
+
+            XHR( call, (response) => {
+                this.setState({data: response.data})
+            })
+
+            this.setState( {isStorageLoaded:false} )
+        }
     }
 
 
@@ -47,9 +71,7 @@ export default class Profile extends React.Component {
     render() {
 
         return(
-          
             <FlatList
-               
                 data={this.state.data}
                 style={styles.container}
                 keyExtractor={item => item.email}

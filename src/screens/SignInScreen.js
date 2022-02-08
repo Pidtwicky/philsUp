@@ -6,9 +6,15 @@ import CustomButton from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import XHR from '../../utils/XHR';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 const height = Dimensions.get('window').height;
+
+// sessionStorage.setItem('active-tab', tabName);
+// var activeTab = sessionStorage.getItem('active-tab');
+// sessionStorage.clear();
 
 export default class SignInScreen extends React.Component{
 
@@ -25,44 +31,39 @@ export default class SignInScreen extends React.Component{
     }
 
     async storeUser(value){ 
-        await AsyncStorage.setItem('@storeUser', value);
+        await AsyncStorage.setItem('storeUser', value);
     }
     
     
-    componentDidUpdate (){
+    componentDidUpdate () {
 
-        
             if (this.state.allFieldsCompleted === true){
                 let callToAPI = 'connexion/' + this.state.inputEmail + '/' + this.state.inputPassword;
                 XHR( callToAPI, (response) => {
-                    this.setState({data: response.data,allFieldsCompleted:false, isDataFound:true})                
+                    this.setState({data: response.data,allFieldsCompleted:false, isDataFound:true})     
+                    
                 })    
             }
 
             if (this.state.isDataFound==true) {
-                console.log('je suis dans ma condition')
                 if (this.state.data.length!=0) {
-                    //console.log('id a ete trouvé');
-                    this.storeUser('2');
-                    this.props.navigation.navigate('Feed');
-                        //storer la valeur récuperee par XHR lorsque ça fonctionnera
-
+                    this.storeUser( "'" + this.state.data[0].id + "'" );    //storer la valeur récuperee par XHR lorsque ça fonctionnera
+                    this.props.navigation.navigate('Drawer');
                 }
-                
                 else 
-                    console.warn('Indentifiants Incorrects')
-                
-                this.setState({isDataFound:false})
-                
-            }
+                console.warn('Identifiants Incorrects')
+            
+            this.setState({isDataFound:false})
+            
+        }
 
-    }
+    }    
 
     login(){
         // validation de l'identité de l'utilisateur
         //console.log("SingIn - onSignInPressed -> dirige vers la page Feed");
         if( this.state.inputEmail != "" && this.state.inputPassword != "")
-        this.setState( { allFieldsCompleted:true } );
+            this.setState( { allFieldsCompleted:true } );
         else{
             console.warn('Vous devez entrer vos informations pour vous connecter');
         }

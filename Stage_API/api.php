@@ -126,11 +126,14 @@ function createUser($firstname, $name, $email, $password)
 {
 
     $pdo = getConnexion();
-    $query =       "   INSERT INTO `user` ( `email`, `password`) 
-                        VALUES ( '$email' , '$password' );
+    $query =       "   INSERT INTO `user` ( `email`, `password`, `team_id`, `job_id`) /*A terme, faire la creation de compte en demandant a l'utilisateur d'entrer lui meme les informations de sa team + poste*/
+                        VALUES ( '$email' , '$password', 1, 1 );
     
                         INSERT INTO `information` ( `name` , `firstname`, `user_entity_id` )
                         VALUES ('$name' , '$firstname' , ( SELECT `id` FROM `user` WHERE `email` = '$email'))";
+
+
+
 
 
     $statement = $pdo->prepare($query);
