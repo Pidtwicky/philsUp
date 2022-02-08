@@ -70,9 +70,9 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderWidth: 1,
         borderColor: '#fff',
-        shadowOffset: { width: 15, height: 15 },
-        shadowColor: 'black',
-        shadowOpacity: 1,
+        // shadowOffset: { width: 15, height: 15 },
+        // shadowColor: 'black',
+        // shadowOpacity: 1,
         elevation: 4,
     },
     title: {
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderBottomWidth: 1,
         borderBottomColor: '#fff',
-        fontFamily: 'HoneyFloristPersonalUse'
+        // fontFamily: 'HoneyFloristPersonalUse'
     },
     author_date: {
         marginTop: 10,

@@ -5,6 +5,8 @@ import CustomInPut from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import XHR from '../../utils/XHR';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 const height = Dimensions.get('window').height;
@@ -23,32 +25,34 @@ export default class SignInScreen extends React.Component{
         }
     }
     
+    async storeUser(value){ 
+        await AsyncStorage.setItem('storeUser', value);
+    }
     
-    componentDidUpdate (){
+    
+    componentDidUpdate () {
 
-        
-            if (this.state.allFieldsCompleted === true){
-                let callToAPI = 'connexion/' + this.state.inputEmail + '/' + this.state.inputPassword;
-                XHR( callToAPI, (response) => {
-                    this.setState({data: response.data,allFieldsCompleted:false, isDataFound:true})                
-                })    
+        if (this.state.allFieldsCompleted === true){
+            let callToAPI = 'connexion/' + this.state.inputEmail + '/' + this.state.inputPassword;
+            XHR( callToAPI, (response) => {
+                this.setState({data: response.data, allFieldsCompleted:false, isDataFound:true})                
+            })    
             }
 
             if (this.state.isDataFound==true) {
                 console.log('je suis dans ma condition')
                 if (this.state.data.length!=0) {
-                    //console.log('id a ete trouvé');
+                    this.storeUser( "'" + this.state.data[0].id + "'" );
                     this.props.navigation.navigate('Feed');
                 }
-                
                 else 
-                    console.warn('Indentifiants Incorrects')
-                
-                this.setState({isDataFound:false})
-                
-            }
+                console.warn('Identifiants Incorrects')
+            
+            this.setState({isDataFound:false})
+            
+        }
 
-    }
+    }    
 
     login(){
         // validation de l'identité de l'utilisateur

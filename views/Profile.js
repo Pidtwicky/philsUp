@@ -2,13 +2,13 @@ import React from "react";
 import { Text, FlatList, Image, View, StyleSheet, Platform, Dimensions, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import XHR from "../utils/XHR";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
 const winHeight = Dimensions.get('window').height;
 const winWidth = Dimensions.get('window').width;
-const callToAPI = "utilisateurs/12";
+const callToAPI = "utilisateurs/";
 
 function support(ios, android) {
 
@@ -25,13 +25,23 @@ export default class Profile extends React.Component {
         }
     }
 
-    componentDidMount() {
+    async getStoredUser(){  
+        const value =  await AsyncStorage.getItem('storeUser'); 
+        console.log("ma valeur est : " + value)
 
-        XHR( callToAPI, (response) => {
+        XHR( callToAPI + value, (response) => {
             this.setState({data: response.data})
         })
+
+        return value;
     }
 
+    componentDidMount() {
+
+        // let call = callToAPI + JSON.stringify(this.getStoredUser());
+        this.getStoredUser();
+
+    }
 
     render() {
 
@@ -75,13 +85,13 @@ export default class Profile extends React.Component {
                                 Description :
                             </Text> 
                             <Text style={[styles.profilContent, {width: winWidth}]}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in dolor elementum, pretium lectus ut, tincidunt ligula. Ut finibus risus sit amet tincidunt aliquam. Nunc varius porta eros, a accumsan augue viverra a. Sed cursus arcu vitae consequat consectetur. 
+                            {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in dolor elementum, pretium lectus ut, tincidunt ligula. Ut finibus risus sit amet tincidunt aliquam. Nunc varius porta eros, a accumsan augue viverra a. Sed cursus arcu vitae consequat consectetur.  */}
                             </Text>
                             <Text style={styles.titleContent}>
                                 Adresse mail :
                             </Text>
                             <Text>
-                                ramelclement@philsup.com
+                                {item.email}
                             </Text>
                         </View>    
 
