@@ -4,6 +4,7 @@ import Logo from '../../assets/images/logo_philsup.png';
 import CustomInPut from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import XHR from '../../utils/XHR';
 
 
@@ -22,6 +23,10 @@ export default class SignInScreen extends React.Component{
             
         }
     }
+
+    async storeUser(value){ 
+        await AsyncStorage.setItem('@storeUser', value);
+    }
     
     
     componentDidUpdate (){
@@ -38,7 +43,10 @@ export default class SignInScreen extends React.Component{
                 console.log('je suis dans ma condition')
                 if (this.state.data.length!=0) {
                     //console.log('id a ete trouvé');
+                    this.storeUser('2');
                     this.props.navigation.navigate('Feed');
+                        //storer la valeur récuperee par XHR lorsque ça fonctionnera
+
                 }
                 
                 else 
@@ -58,7 +66,7 @@ export default class SignInScreen extends React.Component{
         else{
             console.warn('Vous devez entrer vos informations pour vous connecter');
         }
-        //this.props.navigation.navigate('Feed');
+        this.props.navigation.navigate('Feed');
     }
 
     displayRegisterScreen(){

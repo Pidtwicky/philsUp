@@ -25,12 +25,23 @@ export default class Profile extends React.Component {
         }
     }
 
+    async getStoredUser(){  
+        const value = await AsyncStorage.getItem('@storeUser'); 
+        // console.log("Affiche le call API : "+ call);
+        return value;
+    }
+    
     componentDidMount() {
+
+        // let call = callToAPI + JSON.stringify(this.getStoredUser());
+        let call = callToAPI + this.getStoredUser();
+        console.log("Affiche le call API : "+ call);
 
         XHR( callToAPI, (response) => {
             this.setState({data: response.data})
         })
     }
+
 
 
     render() {
