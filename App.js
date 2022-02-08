@@ -44,6 +44,12 @@ export default class App extends React.Component {
 
     async componentDidMount() {
         this._loadFontsAsync();
+
+        callToAPI = "testImage/truc";
+        XHR( callToAPI, (response) => {
+            this.setState({data: response.data,allFieldsCompleted:false, isDataFound:true})     
+            
+        }) 
     }
 
     async _loadFontsAsync() {

@@ -25,6 +25,7 @@ export default class Profile extends React.Component {
             data: [],
             isStorageLoaded: false
         }
+        this.path = 'http://192.168.1.1:8080/Stage/philsUp/assets/images/avatars/';
         this.user;
     }
 
@@ -84,13 +85,15 @@ export default class Profile extends React.Component {
                             <View>
                                 <Image
                                     style={styles.bannerImage}
-                                    source={require('../assets/images/avatar.png')}
+                                    source={ {uri: item.avatar} }
+                                    // source={ {uri: this.path + 'nadir.png'} }
                                 />
                             </View>
                         </LinearGradient>
 
                         {/* Force l'affichage du RenderHeader */}
                         <View style={[styles.profil, {height: winHeight * 0.9, width: winWidth}]}>
+           
                             <Text style={styles.profilName}>
                                 {item.name} {item.firstname}
                             </Text>

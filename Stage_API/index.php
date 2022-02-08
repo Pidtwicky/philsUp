@@ -35,7 +35,7 @@ try {
                         getGroupContent($url[1]);
                     }
                 }
-                break;
+            break;
                 
             case "utilisateurs":
                 if (empty($url[1])) { //CAS 1 - empty
@@ -43,17 +43,22 @@ try {
                 } else {
                     getUserInformationById($url[1]);
                 }
-                break;
+            break;
 
             case "inscription":
                 if (checkEmail($url[3])) { //CAS 1 - empty
                     createUser($url[1], $url[2], $url[3], $url[4]);
                 }
-                break;
+            break;
 
             case "connexion":
                 checkLogin($url[1], $url[2]);
-                break;
+            break;
+
+            case "testImage":
+                echo("TEST JE PASSE ICI");
+                testImage($url[1]);
+            break;
 
             default:
                 throw new Exception("Le 1er élement de ton chemin n'a pas été traité dans dans la condition Switch() de ton fichier index.php (celui du dossier de l'API), vérifie ton URL ou ajoute le Case correspondant, et tu sera un gros roxxor ;) - Ha ! Oublie pas de créer une fonction qui fait un appel a la base de donnes dans le fichier api.php aussi!");

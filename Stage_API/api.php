@@ -2,8 +2,7 @@
 
 define("URL", str_replace("index.php", "", (isset($_SERVER["HTTPS"]) ? "https" : "http") . "://" . $_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"])); //point over site's root url
 
-function sendJSON($infos)
-{
+function sendJSON($infos){
 
     $infos = transformIntoDataForReact($infos);
 
@@ -13,18 +12,16 @@ function sendJSON($infos)
     echo json_encode($infos, JSON_UNESCAPED_UNICODE);
 }
 
-function transformIntoDataForReact($infos)
-{
+function transformIntoDataForReact($infos){
 
     // $infos = "{'data':" . $infos . ",'error':null}";
 
     $data = array('data' => $infos);
-
     return $data;
 }
 
-function getGroups()
-{
+function getGroups(){
+
     $pdo = getConnexion();
     $query =   "SELECT * FROM .group";
 
@@ -36,8 +33,8 @@ function getGroups()
     sendJSON($groups);
 }
 
-function getGroupContent($id)
-{
+function getGroupContent($id){
+
     $pdo = getConnexion();
     $query =   "    SELECT * FROM message 
                     INNER JOIN .group ON .group.id = message.group_entity_id
@@ -51,8 +48,8 @@ function getGroupContent($id)
     sendJSON($groups);
 }
 
-function getUsers()
-{
+function getUsers(){
+
     $query =   "SELECT * FROM user";
     $pdo = getConnexion();
 
@@ -60,19 +57,20 @@ function getUsers()
     $statement->execute();
     $users = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-    // for($i=0; $i < count($users); $i++){
-    //     $users[$i]["image"] = URL."assets/images/users/".$users[$i]["image"];
-    // }
-
+    for($i=0; $i < count($users); $i++){
+        //URL = adresse du site (actuellement Localhost) - puis on y ajoute le chemin vers lequel on stocke l'image des utilisateurs + le nom de l'image ($user[$i]["avatar"])
+        $pathToImageFolder = URL . "../assets/images/avatars/" . $user[$i]["avatar"];
+        $user[$i]["avatar"] = $pathToImageFolder;
+    }
 
     $statement->closeCursor();
     sendJSON($users);
 }
 
-function getUserInformationById($id)
-{
+function getUserInformationById($id){
+
     $pdo = getConnexion();
-    $query =   "    SELECT job.name jobName, team.name teamName, email, information.name, firstname FROM user
+    $query =   "    SELECT job.name jobName, team.name teamName, email, information.name, information.firstname, information.avatar FROM user
                     INNER JOIN information ON user.id = information.id
                     INNER JOIN job ON job.id = user.job_id
                     INNER JOIN team on team.id = user.team_id
@@ -82,15 +80,14 @@ function getUserInformationById($id)
     $statement->execute();
     $user = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-    // $user["image"] = URL."assets/images/users/".$user["image"];
-
+    $pathToImageFolder = URL . "../assets/images/avatars/" . $user[0]["avatar"];
+    $user[0]["avatar"] = $pathToImageFolder;
 
     $statement->closeCursor();
     sendJSON($user);
 }
 
-function getGroupByName($name)
-{
+function getGroupByName($name){
 
     $pdo = getConnexion();
     $query =        "   SELECT * FROM `group`
@@ -104,8 +101,8 @@ function getGroupByName($name)
     sendJSON($group);
 }
 
-function checkEmail($email)
-{
+function checkEmail($email){
+
     $pdo = getConnexion();
     $query = " SELECT id FROM user WHERE user.email = '$email' ";
 
@@ -122,27 +119,20 @@ function checkEmail($email)
     return false;
 }
 
-function createUser($firstname, $name, $email, $password)
-{
-
+function createUser($firstname, $name, $email, $password){
     $pdo = getConnexion();
-    $query =       "   INSERT INTO `user` ( `email`, `password`, `team_id`, `job_id`) /*A terme, faire la creation de compte en demandant a l'utilisateur d'entrer lui meme les informations de sa team + poste*/
+    $query =       "    INSERT INTO `user` ( `email`, `password`, `team_id`, `job_id`) /*A terme, faire la creation de compte en demandant a l'utilisateur d'entrer lui meme les informations de sa team + poste*/
                         VALUES ( '$email' , '$password', 1, 1 );
     
                         INSERT INTO `information` ( `name` , `firstname`, `user_entity_id` )
                         VALUES ('$name' , '$firstname' , ( SELECT `id` FROM `user` WHERE `email` = '$email'))";
-
-
-
-
 
     $statement = $pdo->prepare($query);
     $statement->execute();
     $statement->closeCursor();
 }
 
-function checkLogin($email, $password)
-{
+function checkLogin($email, $password){
 
     $pdo = getConnexion();
     $query =   "    SELECT id FROM user
@@ -152,15 +142,16 @@ function checkLogin($email, $password)
     $statement->execute();
     $user = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-    // $user["image"] = URL."assets/images/users/".$user["image"];
-
-
     $statement->closeCursor();
     sendJSON($user);
 }
 
+function getConnexion(){
 
-function getConnexion()
-{
-    return new PDO("mysql:host=localhost;dbname=stage_philiance;charset=utf8", "root", "");
+    $host       = "localhost";
+    $dbname     = "stage_philiance";
+    $login      = "root";
+    $password   = "";
+
+    return new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $login, $password);
 }
