@@ -43,7 +43,7 @@ export default class SignInScreen extends React.Component{
                 console.log('je suis dans ma condition')
                 if (this.state.data.length!=0) {
                     this.storeUser( "'" + this.state.data[0].id + "'" );
-                    this.props.navigation.navigate('Feed');
+                    this.props.navigation.navigate('Drawer');
                 }
                 else 
                 console.warn('Identifiants Incorrects')

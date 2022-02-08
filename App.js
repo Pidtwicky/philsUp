@@ -48,7 +48,7 @@ export default class App extends React.Component {
                     <Stack.Screen name="HomeScreen" component={HomeScreen} />
                     <Stack.Screen name="SignIn" component={SignInScreen} />
                     <Stack.Screen name="SignUp" component={SignUpScreen} />
-                    <Stack.Screen name="Feed" component={Drawer} />
+                    <Stack.Screen name="Drawer" component={Drawer} />
 
                 </Stack.Navigator>
                 <StatusBar style="auto"/>
