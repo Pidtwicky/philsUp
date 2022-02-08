@@ -6,6 +6,8 @@ import CustomButton from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import XHR from '../../utils/XHR';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 const height = Dimensions.get('window').height;
@@ -32,8 +34,12 @@ export default class SignInScreen extends React.Component{
         await AsyncStorage.setItem('storeUser', value);
     }
     
+    async storeUser(value){ 
+        await AsyncStorage.setItem('storeUser', value);
+    }
     
-    componentDidUpdate (){
+    
+    componentDidUpdate () {
 
             if (this.state.allFieldsCompleted === true){
                 let callToAPI = 'connexion/' + this.state.inputEmail + '/' + this.state.inputPassword;
@@ -45,47 +51,17 @@ export default class SignInScreen extends React.Component{
 
             if (this.state.isDataFound==true) {
                 if (this.state.data.length!=0) {
-                    // let test = JSON.parse( '{"data":[{"id":10}]}' );
-                    // console.log("TYPEOF = " + typeof(test));
-                    // console.log("TYPEOF = " + typeof(test[0]));
-                    // console.log("TYPEOF = " + typeof(test[0][0]));
-
-
-                    
-
-                    // console.log('id a ete trouvé n°1 = ' + test.data[0].id);
-
-
-
-
-                    // console.log('id a ete trouvé n°2 = ' + test['data']);  
-                    // console.log('id a ete trouvé n°3 = ' + toString(test.data));  
-                    // console.log('id a ete trouvé n°4 = ' + test.data[0]);  
-
-                    // const json = '{"data":{"result":true, "count":42}}';
-                    // const obj = JSON.parse(json);
-
-                    // console.log(obj.data.count);
-                    // // expected output: 42
-
-                    // console.log(obj.data.result);
-                    // expected output: true
-
-
-                    console.log('id a ete trouvé n°2 = ' + this.state.data[0].id);
                     this.storeUser( "'" + this.state.data[0].id + "'" );    //storer la valeur récuperee par XHR lorsque ça fonctionnera
-                    this.props.navigation.navigate('Feed'); 
-                    
+                    this.props.navigation.navigate('Drawer');
                 }
-                
                 else 
-                    console.warn('Indentifiants Incorrects')
-                
-                this.setState({isDataFound:false})
-                
-            }
+                console.warn('Identifiants Incorrects')
+            
+            this.setState({isDataFound:false})
+            
+        }
 
-    }
+    }    
 
     login(){
         // validation de l'identité de l'utilisateur
