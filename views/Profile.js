@@ -43,6 +43,12 @@ export default class Profile extends React.Component {
         */      
     }
 
+    async getStoredUser(){  
+        const value = await AsyncStorage.getItem('@storeUser'); 
+        // console.log("Affiche le call API : "+ call);
+        return value;
+    }
+    
     componentDidMount() {
         this.getStoredUser();
     }
@@ -60,6 +66,7 @@ export default class Profile extends React.Component {
             this.setState( {isStorageLoaded:false} )
         }
     }
+
 
 
     render() {

@@ -1,63 +1,34 @@
-import React, {useState} from "react";
-import { View, Text, Image, StyleSheet, useWindowDimensions } from 'react-native';
-import Logo from '../../assets/images/logo_philsup.png';
-import CustomButton from '../components/CustomButton';
-import {useNavigation} from '@react-navigation/native';
+import { StyleSheet} from 'react-native';
+import React from 'react';
+import { ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native';
+import Header from '../components/Header';
+import  Post from '../components/Post';
+import Stories from '../components/Stories';
+import {POSTS}  from '../../data/posts';
 
 const FeedScreen = () => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <Header />
+      <Stories />
+      <ScrollView>
+        {POSTS.map((post, index) => (
+         <Post post={post} key={index} /> 
 
-    const {height} = useWindowDimensions();
-    const navigation = useNavigation();
-
-    const onSignInPressed = () => {
-        navigation.navigate('HomeScreen')
-    };
-
-    return (
-
-        <View>
-            
-            <View style={styles.root} >
-                
-                <Text style={styles.h1}>FUTURE FEED</Text>
-                
-                <Image
-                source={Logo}
-                style={[styles.logo, { height: height * 0.17 }]}
-                resizeMode='contain' />
-                
-            </View>
-
-             <View>
-
-                 <CustomButton text="retour test" onPress={onSignInPressed} type="PRIMARY" />
-                 
-             </View>
-
-        </View>
-    )
+        ))}
+      </ScrollView>
+    </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({
-    root:{
-        alignItems: 'center',
-        marginTop: 60,
-        marginBottom: 20,
+    container:{
+        backgroundColor:'black',
+        flex: 1,
     },
-    h1: {
-        color: '#FF7F6F',
-        fontSize: 30,
-    },
-    logo: {
-        width: '20%',
-    },
-    text: {
-        color: 'black',
-        fontSize: 18,
-        textAlign: "left",
-        marginLeft: 40,
-        marginRight: 50,
-    },
-});
+})
+
+
 
 export default FeedScreen;

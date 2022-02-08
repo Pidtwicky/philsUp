@@ -33,10 +33,6 @@ export default class SignInScreen extends React.Component{
         await AsyncStorage.setItem('storeUser', value);
     }
     
-    async storeUser(value){ 
-        await AsyncStorage.setItem('storeUser', value);
-    }
-    
     
     componentDidUpdate () {
 
@@ -70,7 +66,7 @@ export default class SignInScreen extends React.Component{
         else{
             console.warn('Vous devez entrer vos informations pour vous connecter');
         }
-        //this.props.navigation.navigate('Feed');
+        this.props.navigation.navigate('Feed');
     }
 
     displayRegisterScreen(){
