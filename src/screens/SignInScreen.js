@@ -4,10 +4,15 @@ import Logo from '../../assets/images/logo_philsup.png';
 import CustomInPut from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import XHR from '../../utils/XHR';
 
 
 const height = Dimensions.get('window').height;
+
+// sessionStorage.setItem('active-tab', tabName);
+// var activeTab = sessionStorage.getItem('active-tab');
+// sessionStorage.clear();
 
 export default class SignInScreen extends React.Component{
 
@@ -22,23 +27,55 @@ export default class SignInScreen extends React.Component{
             
         }
     }
+
+    async storeUser(value){ 
+        await AsyncStorage.setItem('storeUser', value);
+    }
     
     
     componentDidUpdate (){
 
-        
             if (this.state.allFieldsCompleted === true){
                 let callToAPI = 'connexion/' + this.state.inputEmail + '/' + this.state.inputPassword;
                 XHR( callToAPI, (response) => {
-                    this.setState({data: response.data,allFieldsCompleted:false, isDataFound:true})                
+                    this.setState({data: response.data,allFieldsCompleted:false, isDataFound:true})     
+                    
                 })    
             }
 
             if (this.state.isDataFound==true) {
-                console.log('je suis dans ma condition')
                 if (this.state.data.length!=0) {
-                    //console.log('id a ete trouvé');
-                    this.props.navigation.navigate('Feed');
+                    // let test = JSON.parse( '{"data":[{"id":10}]}' );
+                    // console.log("TYPEOF = " + typeof(test));
+                    // console.log("TYPEOF = " + typeof(test[0]));
+                    // console.log("TYPEOF = " + typeof(test[0][0]));
+
+
+                    
+
+                    // console.log('id a ete trouvé n°1 = ' + test.data[0].id);
+
+
+
+
+                    // console.log('id a ete trouvé n°2 = ' + test['data']);  
+                    // console.log('id a ete trouvé n°3 = ' + toString(test.data));  
+                    // console.log('id a ete trouvé n°4 = ' + test.data[0]);  
+
+                    // const json = '{"data":{"result":true, "count":42}}';
+                    // const obj = JSON.parse(json);
+
+                    // console.log(obj.data.count);
+                    // // expected output: 42
+
+                    // console.log(obj.data.result);
+                    // expected output: true
+
+
+                    console.log('id a ete trouvé n°2 = ' + this.state.data[0].id);
+                    this.storeUser( "'" + this.state.data[0].id + "'" );    //storer la valeur récuperee par XHR lorsque ça fonctionnera
+                    this.props.navigation.navigate('Feed'); 
+                    
                 }
                 
                 else 
@@ -54,7 +91,7 @@ export default class SignInScreen extends React.Component{
         // validation de l'identité de l'utilisateur
         //console.log("SingIn - onSignInPressed -> dirige vers la page Feed");
         if( this.state.inputEmail != "" && this.state.inputPassword != "")
-        this.setState( { allFieldsCompleted:true } );
+            this.setState( { allFieldsCompleted:true } );
         else{
             console.warn('Vous devez entrer vos informations pour vous connecter');
         }
