@@ -47,7 +47,7 @@ export default class SignInScreen extends React.Component{
             if (this.state.isDataFound==true) {
                 if (this.state.data.length!=0) {
                     this.storeUser( "'" + this.state.data[0].id + "'" );    //storer la valeur récuperee par XHR lorsque ça fonctionnera
-                    this.props.navigation.navigate('Drawer');
+                    this.props.navigation.navigate('Feed');
                 }
                 else 
                 console.warn('Identifiants Incorrects')

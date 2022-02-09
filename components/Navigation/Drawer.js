@@ -66,7 +66,7 @@ export default class Drawer extends React.Component {
                     }}
                 >
                     <MyDrawer.Screen
-                        name="Feed"
+                        name="Fil d\'actualités"
                         children={() => <FeedScreen 
                                             inputValue={this.state.inputValue} 
                                             triggerUpdate={this.state.triggerUpdate}
@@ -74,7 +74,7 @@ export default class Drawer extends React.Component {
                                         />
                         }
                         options={() => ({
-                            title: 'Feed',
+                            title: 'Fil d\'actualités',
                             headerRight: () => (
                                 <Search
                                     inputValue={this.state.inputValue} // parent vers enfant 
