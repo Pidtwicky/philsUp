@@ -4,6 +4,7 @@ import Logo from '../../assets/images/logo_philsup.png';
 import CustomInPut from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import XHR from "../../utils/XHR";
+import bcrypt from 'react-native-bcrypt';
 
 
 const height = Dimensions.get('window').height;
@@ -46,17 +47,17 @@ export default class SignUpScreen extends React.Component{
         let lastname =  this.state.inputLastname;
         let email =     this.state.inputEmail;
         let password =  this.state.inputPassword; 
-        let test = [];
 
-        const callToAPI = "inscription/" + lastname + "/" + firstname + "/" + email + "/" + password;
+        var salt = bcrypt.genSaltSync(10);
+        var hashedPassword = bcrypt.hashSync(password, salt);
+
+        const callToAPI = "inscription/" + lastname + "/" + firstname + "/" + email + "/" + hashedPassword;
         XHR( callToAPI, (response) => {
-             test  = response.data;
-             if (test.length === 0){
+            if (response.data.length === 0){
                 this.props.navigation.navigate('SignIn');
-             }
-             else
-             console.warn('Cet email existe deja') 
-             console.log(test)
+            }
+            else
+                console.warn('Cet email existe deja') 
         })
     }
 
@@ -77,15 +78,14 @@ export default class SignUpScreen extends React.Component{
     }
 
     onTermsOfUsePressed(){
-        console.warn('onTermsOfUsePressed');
+        // console.warn('onTermsOfUsePressed');
     }
 
     onPrivacyPressed(){
-        console.warn('onPrivacyPressed');
+        // console.warn('onPrivacyPressed');
     }
 
     render(){
-        console.log("Affichage SignUP: " + JSON.stringify(this.props) );
 
         return (
             <ScrollView showsVerticalScrollIndicator={false} > 
