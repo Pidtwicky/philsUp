@@ -15,9 +15,9 @@ export const USERS = [
     'https://images.pexels.com/photos/819530/pexels-photo-819530.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
 },
 {
-        user:'Cecilia',
-        image:
-        'https://images.pexels.com/photos/1055691/pexels-photo-1055691.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+    user:'Cecilia',
+    image:
+    'https://images.pexels.com/photos/1055691/pexels-photo-1055691.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
 },
 {
     user:'Marc',

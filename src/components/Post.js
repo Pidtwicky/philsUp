@@ -34,8 +34,11 @@ const Post = ({ post }) => {
         <PostHeader post={post} />
         <PostImage post={post} />
         <View style={{ marginHorizontal: 15, marginTop: 10 }}>
-          <PostFooter /> 
-          <Likes /> 
+            <PostFooter /> 
+            <Likes post={post}/> 
+            <Caption post={post}/>
+            <CommentsSection    post={post}/>
+            <Comments post={post}/>
         </View>
     </View>
   )
@@ -89,6 +92,40 @@ const PostFooter = () => (
 
 )
 
+const Caption =({ post }) =>  (
+    <View style={{ marginTop: 5 }}>
+        <Text style={{ color: 'white' }}>
+            <Text style={{ fontWeight: '600' }}>{post.user}</Text>
+            <Text>  {post.caption}</Text>
+        </Text>
+    </View>
+)
+
+const CommentsSection = ({ post }) => (
+    <View style={{ marginTop: 5 }}>
+        { !! post.comments.length && (
+            <Text   style={{ color: 'gray' }}>
+                    Voir {post.comments.length > 1 ? 'all' : ''} {post.comments.length}{''} 
+                    {post.comments.length > 1 ? 'comments' : 'comment'}
+            </Text>
+        )}
+    </View>
+)
+
+const Comments = ({post}) =>  (
+    <>
+        {post.comments.map((comment, index) => (
+            <View key={index} style={{ flexDirection: 'row', marginTop: 5 }}>
+                <Text style={{color: 'white'}}>
+                    <Text style={{ fontWeight:'600' }}>{comment.user}</Text>{ '  ' }
+                { comment.comment }
+                </Text>
+            </View>
+        ))}
+    </>  
+)
+  
+
 const Icon = ({ imgStyle, imgUrl }) => (
     <TouchableOpacity>
         <Image style={imgStyle} source={{ uri: imgUrl}} />
@@ -97,8 +134,13 @@ const Icon = ({ imgStyle, imgUrl }) => (
 )
 
 const Likes = ({ post }) => (
-   <Text style={{ color: 'white' }}>likes</Text> 
-)
+    <View style={{ flexDirection: 'row' , marginTop: 4}}>
+        <Text style={{ color: 'white', fontWeight: '600' }}>
+            {post.likes.toLocaleString('en')} likes
+        </Text> 
+   </View>
+   )
+
 
 const styles = StyleSheet.create({
     story:{
