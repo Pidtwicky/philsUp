@@ -7,18 +7,20 @@ export default class CustomInput extends React.Component{
 
   constructor(props){
     super(props)
+
   }
 
   render(){
     return (
       <View style={styles.container}>
         <TextInput 
+
           value={this.props.inputValue}
           onChangeText={ text => this.props.setValue(text) }
           placeholder={this.props.transferPlaceHolder} 
           style={styles.input} 
           
-          // secureTextEntry={secureTextEntry}
+           secureTextEntry={this.props.secureTextEntry}
          />
       </View>
     );
