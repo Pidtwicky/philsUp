@@ -71,7 +71,7 @@ function getUserInformationById($id){
 
     $pdo = getConnexion();
     $query =   "    SELECT job.name jobName, team.name teamName, email, information.name, information.firstname, information.avatar FROM user
-                    INNER JOIN information ON user.id = information.id
+                    INNER JOIN information ON user.id = information.user_entity_id
                     INNER JOIN job ON job.id = user.job_id
                     INNER JOIN team on team.id = user.team_id
                     WHERE user.id = $id";
@@ -124,8 +124,8 @@ function createUser($firstname, $name, $email, $password){
     $query =       "    INSERT INTO `user` ( `email`, `password`, `team_id`, `job_id`) /*A terme, faire la creation de compte en demandant a l'utilisateur d'entrer lui meme les informations de sa team + poste*/
                         VALUES ( '$email' , '$password', 1, 1 );
     
-                        INSERT INTO `information` ( `name` , `firstname`, `user_entity_id` )
-                        VALUES ('$name' , '$firstname' , ( SELECT `id` FROM `user` WHERE `email` = '$email'))";
+                        INSERT INTO `information` ( `name` , `firstname`, `user_entity_id`, `avatar` )
+                        VALUES ('$name' , '$firstname' , ( SELECT `id` FROM `user` WHERE `email` = '$email'), 'new.jpg')";
 
     $statement = $pdo->prepare($query);
     $statement->execute();

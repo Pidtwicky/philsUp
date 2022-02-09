@@ -80,12 +80,12 @@ export default class SignUpScreen extends React.Component{
 
     handleSlashOnHashedPassword(stringReplace) {
 
-        // console.log("AVANT : " + stringReplace);
+        console.log("MDP AVANT : " + stringReplace);
 
         while( stringReplace.search("\/") != -1){
             stringReplace = stringReplace.replace("\/", "~*-");
         }
-        // console.log("APRES : " + stringReplace);
+        console.log("MDP APRES : " + stringReplace);
 
         return stringReplace;
     }
