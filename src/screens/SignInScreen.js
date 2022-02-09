@@ -25,7 +25,7 @@ export default class SignInScreen extends React.Component{
             inputPassword:'',
             allFieldsCompleted:false,
             isDataFound:false,
-            
+            secureTextEntry:''
         }
     }
 
@@ -115,7 +115,7 @@ export default class SignInScreen extends React.Component{
                         placeholder='Tapez votre mot de passe...'
                         inputValue={this.props.inputPassword}
                         setValue={ (inputText) => this.handleInputValue(inputText, "password") }
-                    //  secureTextEntry
+                       // secureTextEntry
                      />
     
                      <CustomButton text="Se connecter" onPress={ ()=> this.login() } type="PRIMARY" />

@@ -5,6 +5,8 @@ import GroupList from '../../views/GroupList';
 import Profile from '../../views/Profile';
 import Search from "../../views/Search";
 import FeedScreen from "../../src/screens/FeedScreen";
+import { Icon } from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -33,6 +35,15 @@ export default class Drawer extends React.Component {
             this.setState( {triggerUpdate: false} );
         }
     }
+    onSignOutPress() {
+
+        // vider la variable de session
+        AsyncStorage.clear()
+        // renvoyer sur la page Home/page d'acceuil
+        this.props.navigation.navigate('HomeScreen');
+
+    }
+
 
     render() {
 
@@ -61,6 +72,12 @@ export default class Drawer extends React.Component {
                                     />
                                 </View>
                                 <DrawerItemList {...props} />
+                                <Icon
+                                        raised
+                                        name='logout'
+                                        color='black'
+                                        onPress={() => this.onSignOutPress()} />
+
                             </SafeAreaView>
                         )
                     }}
