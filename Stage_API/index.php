@@ -3,12 +3,13 @@
 
 require_once("./api.php");
 
-function handleSpaceFromURL($search)
+//swap "~*-" serie of characters with specified $swapCharacter in a specific string ( $search )
+function handleSpecialCharacterFromURL($search, $swapCharacter)
 {
-
-    $res = str_replace("~*-", " ", $search);
+    $res = str_replace("~*-", $swapCharacter, $search);
     return $res;
 }
+
 
 //www.monsite.fr/formations                         CAS 1
 // => www.monsite.fr/index.php?myRequest=formations
@@ -30,7 +31,7 @@ try {
                 } else {
                     if ($url[1] === "nom") {
 
-                        getGroupByName(handleSpaceFromURL($url[2]));
+                        getGroupByName(handleSpecialCharacterFromURL( $url[2], " " ));
                     } else {
                         getGroupContent($url[1]);
                     }
@@ -47,7 +48,7 @@ try {
 
             case "inscription":
                 if (checkEmail($url[3])) { //CAS 1 - empty
-                    createUser($url[1], $url[2], $url[3], $url[4]);
+                    createUser($url[1], $url[2], $url[3], handleSpecialCharacterFromURL( $url[4], "/" ) );
                 }
             break;
 

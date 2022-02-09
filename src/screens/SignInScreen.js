@@ -3,17 +3,12 @@ import { View, Text, Image, StyleSheet, Dimensions, Alert } from 'react-native';
 import Logo from '../../assets/images/logo_philsup.png';
 import CustomInPut from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
-import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import XHR from '../../utils/XHR';
-
+import bcrypt from 'react-native-bcrypt';
 
 
 const height = Dimensions.get('window').height;
-
-// sessionStorage.setItem('active-tab', tabName);
-// var activeTab = sessionStorage.getItem('active-tab');
-// sessionStorage.clear();
 
 export default class SignInScreen extends React.Component{
 
@@ -33,29 +28,31 @@ export default class SignInScreen extends React.Component{
         await AsyncStorage.setItem('storeUser', value);
     }
     
-    
-    componentDidUpdate () {
+    async componentDidUpdate () {
 
             if (this.state.allFieldsCompleted === true){
                 let callToAPI = 'connexion/' + this.state.inputEmail + '/' + this.state.inputPassword;
                 XHR( callToAPI, (response) => {
-                    this.setState({data: response.data,allFieldsCompleted:false, isDataFound:true})     
-                    
+                    this.setState({data: response.data,allFieldsCompleted:false, isDataFound:true});
                 })    
             }
 
-            if (this.state.isDataFound==true) {
-                if (this.state.data.length!=0) {
-                    this.storeUser( "'" + this.state.data[0].id + "'" );    //storer la valeur récuperee par XHR lorsque ça fonctionnera
-                    this.props.navigation.navigate('Feed');
+            if (this.state.isDataFound==true) {                                                         //Si on a récupéré les données de la requete XHR
+                if ( this.state.data.length !== 0 ) {                                                   //et qu'il y a des informations à l'intérieur
+                 
+                    if( bcrypt.compareSync(this.state.inputPassword, this.state.data[0].password) ){    //compare le MdP saisi avec le MdP crypté dans la base de données
+                        this.storeUser( "'" + this.state.data[0].id + "'" );                            //Sauvegarde l'id de l'utilisateur connecté dans la variable de Session
+                        this.props.navigation.navigate('Feed');                                         //Redirige vers la page Feed
+                    } 
+                    else{
+                        console.warn("Le mot de passe ne correspond pas à cette adresse Email...");
+                    }   
                 }
-                else 
-                console.warn('Identifiants Incorrects')
+                else                                                                                    //Si les données sont vides -> l'email n'est pas dans la BdD
+                    console.warn('Cette adresse mail est introuvable...')
             
-            this.setState({isDataFound:false})
-            
+            this.setState({isDataFound:false});   
         }
-
     }    
 
     login(){
@@ -66,7 +63,6 @@ export default class SignInScreen extends React.Component{
         else{
             console.warn('Vous devez entrer vos informations pour vous connecter');
         }
-        this.props.navigation.navigate('Feed');
     }
 
     displayRegisterScreen(){
@@ -88,8 +84,6 @@ export default class SignInScreen extends React.Component{
     render(){
 
         const myPlaceHolder = 'Je gere la transmition de props';
-
-        console.log("Affichage SignIn: " + JSON.stringify(this.props) );
         return (
             <View>
                 <View style={styles.root} >

@@ -50,8 +50,9 @@ export default class SignUpScreen extends React.Component{
 
         var salt = bcrypt.genSaltSync(10);
         var hashedPassword = bcrypt.hashSync(password, salt);
+        let hashedPasswordForURL = this.handleSlashOnHashedPassword(hashedPassword);
 
-        const callToAPI = "inscription/" + lastname + "/" + firstname + "/" + email + "/" + hashedPassword;
+        const callToAPI = "inscription/" + lastname + "/" + firstname + "/" + email + "/" + hashedPasswordForURL;
         XHR( callToAPI, (response) => {
             if (response.data.length === 0){
                 this.props.navigation.navigate('SignIn');
@@ -75,6 +76,18 @@ export default class SignUpScreen extends React.Component{
         else if( inputOrigin === "password"){
             this.setState( {inputPassword: inputText} );
         }
+    }
+
+    handleSlashOnHashedPassword(stringReplace) {
+
+        // console.log("AVANT : " + stringReplace);
+
+        while( stringReplace.search("\/") != -1){
+            stringReplace = stringReplace.replace("\/", "~*-");
+        }
+        // console.log("APRES : " + stringReplace);
+
+        return stringReplace;
     }
 
     onTermsOfUsePressed(){

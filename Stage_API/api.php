@@ -59,8 +59,8 @@ function getUsers(){
 
     for($i=0; $i < count($users); $i++){
         //URL = adresse du site (actuellement Localhost) - puis on y ajoute le chemin vers lequel on stocke l'image des utilisateurs + le nom de l'image ($user[$i]["avatar"])
-        $pathToImageFolder = URL . "../assets/images/avatars/" . $user[$i]["avatar"];
-        $user[$i]["avatar"] = $pathToImageFolder;
+        $pathToImageFolder = URL . "../assets/images/avatars/" . $users[$i]["avatar"];
+        $users[$i]["avatar"] = $pathToImageFolder;
     }
 
     $statement->closeCursor();
@@ -135,8 +135,8 @@ function createUser($firstname, $name, $email, $password){
 function checkLogin($email, $password){
 
     $pdo = getConnexion();
-    $query =   "    SELECT id FROM user
-                    WHERE `password` = '$password' AND email = '$email' ";
+    $query =   "    SELECT id, `password` FROM user
+                    WHERE email = '$email' ";
 
     $statement = $pdo->prepare($query);
     $statement->execute();
