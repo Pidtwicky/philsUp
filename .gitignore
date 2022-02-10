@@ -12,5 +12,5 @@ web-build/
 
 # macOS
 .DS_Store
-*.php
+Stage_API/
 utils/XHR.js
