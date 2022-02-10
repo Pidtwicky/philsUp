@@ -109,7 +109,7 @@ export default class Profile extends React.Component {
                                 Adresse mail :
                             </Text>
                             <Text>
-                                ramelclement@philsup.com
+                                {item.email}
                             </Text>
                         </View>    
 
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         height: winHeight / 9,
         width: support("100%", "100%"),
         position:'absolute',
-        zIndex: 100
+        zIndex: 1
     },
     profil:{
         flexWrap: "wrap",
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     },
     bannerImage:{
         position:'relative',
-        top:(Platform.OS === 'ios') ? 50 : 20,
+        top:(Platform.OS === 'ios') ? 10 : 20,
         left:50,
         height:100,
         width:100,
@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
         borderColor:'#f8f8f8',
         zIndex: 100,
         borderRadius: 50,
-
     },
     article: {
         top:200,
