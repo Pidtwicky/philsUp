@@ -13,9 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const MyDrawer = createDrawerNavigator(),
-      winHeight = Dimensions.get("window").height;
-
-const callToAPI = 'groupes';     
+      winHeight = Dimensions.get("window").height;   
 
 export default class Drawer extends React.Component {
 
