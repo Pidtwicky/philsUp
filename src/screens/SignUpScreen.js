@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, Dimensions, ScrollView } from 'react-nat
 import Logo from '../../assets/images/logo_philsup.png';
 import CustomInPut from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
-import XHR from "../../utils/XHR";
+import XHR from "../utils/XHR";
 import bcrypt from 'react-native-bcrypt';
 
 

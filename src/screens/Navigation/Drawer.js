@@ -1,10 +1,12 @@
 import React from "react";
 import { createDrawerNavigator, DrawerItemList } from "@react-navigation/drawer";
 import { SafeAreaView, View, Image, Dimensions } from "react-native";
-import GroupList from '../../views/GroupList';
-import Profile from '../../views/Profile';
-import Search from "../../views/Search";
-import FeedScreen from "../../src/screens/FeedScreen";
+import GroupListScreen  from  '../GroupListScreen';
+import ProfileScreen    from  '../ProfileScreen';
+import FeedScreen       from  "../FeedScreen";
+import Search from "../../components/Search";
+
+
 import { Icon } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -64,7 +66,7 @@ export default class Drawer extends React.Component {
                                     }}
                                 >
                                     <Image
-                                        source={require('../../assets/images/icon.png')}
+                                        source={require("../../../assets/images/icon.png")}
                                         style={{
                                             height: '100%',
                                             resizeMode: 'contain'
@@ -105,7 +107,7 @@ export default class Drawer extends React.Component {
 
                     <MyDrawer.Screen
                         name="Groupes"
-                        children={() => <GroupList 
+                        children={() => <GroupListScreen 
                                             inputValue={this.state.inputValue} 
                                             triggerUpdate={this.state.triggerUpdate}
                                             updateIsDone={this.updateIsDone()}
@@ -125,7 +127,7 @@ export default class Drawer extends React.Component {
                     
                     <MyDrawer.Screen
                         name="Profil"
-                        children={() => <Profile />}
+                        children={() => <ProfileScreen />}
                         
                     />
                     

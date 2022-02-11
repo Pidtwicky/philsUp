@@ -4,7 +4,7 @@ import Logo from '../../assets/images/logo_philsup.png';
 import CustomInPut from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import XHR from '../../utils/XHR';
+import XHR from '../utils/XHR';
 import bcrypt from 'react-native-bcrypt';
 
 

@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MMKVStorage, { useMMKVStorage } from "react-native-mmkv-storage";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Drawer from './components/Navigation/Drawer';
+import Drawer from './src/screens/Navigation/Drawer';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
 
