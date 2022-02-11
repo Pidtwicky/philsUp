@@ -1,5 +1,4 @@
 node_modules/
-Stage_API/
 .expo/
 dist/
 npm-debug.*
@@ -11,6 +10,3 @@ npm-debug.*
 *.orig.*
 web-build/
 
-# macOS
-.DS_Store
-utils/XHR.js
