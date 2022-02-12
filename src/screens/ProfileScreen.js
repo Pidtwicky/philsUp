@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, FlatList, Image, View, StyleSheet, Platform, Dimensions, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import XHR from "../utils/XHR";
 
 
@@ -8,7 +9,7 @@ import XHR from "../utils/XHR";
 
 const winHeight = Dimensions.get('window').height;
 const winWidth = Dimensions.get('window').width;
-const callToAPI = "utilisateurs/12";
+const callToAPI = "utilisateurs/";
 
 function support(ios, android) {
 
@@ -21,24 +22,49 @@ export default class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            isStorageLoaded: false
         }
+        this.path = 'http://192.168.1.1:8080/Stage/philsUp/assets/images/avatars/';
+        this.user;
     }
 
-    componentDidMount() {
+    async getStoredUser(){  
+        const value = await AsyncStorage.getItem('storeUser');
 
-        XHR( callToAPI, (response) => {
+        /*Option 1 - Enregistre l'id dans les donnée membres de la class (this.user), et toggle la variable d'état */
+        this.user = value;
+        this.setState( {isStorageLoaded:true} )
+
+        /* Option 2 - Appeller directement l'API lorsqu'on reçoit l'id user storé dans la variable de session
+        XHR( callToAPI + value, (response) => {
             this.setState({data: response.data})
         })
+        */      
+    }
+    
+    componentDidMount() {
+        this.getStoredUser();
     }
 
+    componentDidUpdate() {
+
+        /*Option 1 (suite) - puis lance l'appel à l'API si isStorageLoaded = true */
+        if( this.state.isStorageLoaded ){
+            let call = callToAPI + this.user;
+
+            XHR( call, (response) => {
+                this.setState({data: response.data})
+            })
+
+            this.setState( {isStorageLoaded:false} )
+        }
+    }
 
     render() {
 
         return(
-          
             <FlatList
-               
                 data={this.state.data}
                 style={styles.container}
                 keyExtractor={item => item.email}
@@ -58,13 +84,15 @@ export default class Profile extends React.Component {
                             <View>
                                 <Image
                                     style={styles.bannerImage}
-                                    source={require('../assets/images/avatar.png')}
+                                    source={ {uri: item.avatar} }
+                                    // source={ {uri: this.path + 'nadir.png'} }
                                 />
                             </View>
                         </LinearGradient>
 
                         {/* Force l'affichage du RenderHeader */}
                         <View style={[styles.profil, {height: winHeight * 0.9, width: winWidth}]}>
+           
                             <Text style={styles.profilName}>
                                 {item.name} {item.firstname}
                             </Text>
@@ -81,7 +109,7 @@ export default class Profile extends React.Component {
                                 Adresse mail :
                             </Text>
                             <Text>
-                                ramelclement@philsup.com
+                                {item.email}
                             </Text>
                         </View>    
 
@@ -103,7 +131,7 @@ const styles = StyleSheet.create({
         height: winHeight / 9,
         width: support("100%", "100%"),
         position:'absolute',
-        zIndex: 100
+        zIndex: 1
     },
     profil:{
         flexWrap: "wrap",
@@ -141,7 +169,7 @@ const styles = StyleSheet.create({
     },
     bannerImage:{
         position:'relative',
-        top:(Platform.OS === 'ios') ? 50 : 20,
+        top:(Platform.OS === 'ios') ? 10 : 20,
         left:50,
         height:100,
         width:100,
@@ -150,7 +178,6 @@ const styles = StyleSheet.create({
         borderColor:'#f8f8f8',
         zIndex: 100,
         borderRadius: 50,
-
     },
     article: {
         top:200,

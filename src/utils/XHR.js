@@ -1,10 +1,11 @@
 
-const DOMAIN = "http://192.168.1.100:8888/philsUp/Stage_API/";
+const DOMAIN = "http://192.168.1.1:8080/Stage/philsUp/Stage_API/";
 
-export default function XHR(pathRequest, callback) {
+export default function XHR(pathRequest, callback){
 
     let xhr = new XMLHttpRequest();
     let url = DOMAIN + pathRequest;
+    // let test = 'test';
         
     xhr.open('GET', url, true);
     xhr.onload = () => {
@@ -15,7 +16,7 @@ export default function XHR(pathRequest, callback) {
 
             let json = JSON.parse(response);
             callback(json);
-            console.log("Les données reçues de l'API sont les suivantes \n:  : " + response);
+            console.log("Les données reçus de l'API sont les suivantes \n:  : " + response);
 
         } else {
 

@@ -1,16 +1,19 @@
 import React from "react";
 import { createDrawerNavigator, DrawerItemList } from "@react-navigation/drawer";
 import { SafeAreaView, View, Image, Dimensions } from "react-native";
-import GroupList from '../../views/GroupList';
-import Profile from '../../views/Profile';
-import Search from "../../views/Search";
+import GroupListScreen  from  '../GroupListScreen';
+import ProfileScreen    from  '../ProfileScreen';
+import FeedScreen       from  "../FeedScreen";
+import Search from "../../components/Search";
+
+
+import { Icon } from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
 const MyDrawer = createDrawerNavigator(),
-      winHeight = Dimensions.get("window").height;
-
-const callToAPI = 'groupes';     
+      winHeight = Dimensions.get("window").height;   
 
 export default class Drawer extends React.Component {
 
@@ -32,6 +35,15 @@ export default class Drawer extends React.Component {
             this.setState( {triggerUpdate: false} );
         }
     }
+    onSignOutPress() {
+
+        // vider la variable de session
+        AsyncStorage.clear()
+        // renvoyer sur la page Home/page d'acceuil
+        this.props.navigation.navigate('HomeScreen');
+
+    }
+
 
     render() {
 
@@ -52,7 +64,7 @@ export default class Drawer extends React.Component {
                                     }}
                                 >
                                     <Image
-                                        source={require('../../assets/images/icon.png')}
+                                        source={require("../../../assets/images/icon.png")}
                                         style={{
                                             height: '100%',
                                             resizeMode: 'contain'
@@ -60,14 +72,40 @@ export default class Drawer extends React.Component {
                                     />
                                 </View>
                                 <DrawerItemList {...props} />
+                                <Icon
+                                        raised
+                                        name='logout'
+                                        color='black'
+                                        onPress={() => this.onSignOutPress()} />
+
                             </SafeAreaView>
                         )
                     }}
                 >
+                    <MyDrawer.Screen
+                        name="Fil d\'actualités"
+                        children={() => <FeedScreen 
+                                            inputValue={this.state.inputValue} 
+                                            triggerUpdate={this.state.triggerUpdate}
+                                            updateIsDone={this.updateIsDone()}
+                                        />
+                        }
+                        options={() => ({
+                            title: 'Fil d\'actualités',
+                            headerRight: () => (
+                                <Search
+                                    inputValue={this.state.inputValue} // parent vers enfant 
+                                    updateDatabase={(searchText) => this.updateResearch(searchText)} // enfant vers parent
+                                    placeholder={"Chercher un groupe"}
+                                />
+                            ),
+                            headerTitleAlign: "left",
+                        })}
+                    />
 
                     <MyDrawer.Screen
                         name="Groupes"
-                        children={() => <GroupList 
+                        children={() => <GroupListScreen 
                                             inputValue={this.state.inputValue} 
                                             triggerUpdate={this.state.triggerUpdate}
                                             updateIsDone={this.updateIsDone()}
@@ -87,7 +125,7 @@ export default class Drawer extends React.Component {
                     
                     <MyDrawer.Screen
                         name="Profil"
-                        children={() => <Profile />}
+                        children={() => <ProfileScreen />}
                         
                     />
                     
