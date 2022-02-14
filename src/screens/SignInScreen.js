@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, Dimensions, Alert } from 'react-native';
+import { ScrollView, View, Text, Image, StyleSheet, Dimensions, Alert } from 'react-native';
 import Logo from '../../assets/images/logo_philsup.png';
 import CustomInPut from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
@@ -18,6 +18,7 @@ export default class SignInScreen extends React.Component{
             data:[],
             inputEmail:'',
             inputPassword:'',
+            Error:false,
             allFieldsCompleted:false,
             isDataFound:false,
             secureTextEntry:''
@@ -61,7 +62,8 @@ export default class SignInScreen extends React.Component{
         if( this.state.inputEmail != "" && this.state.inputPassword != "")
             this.setState( { allFieldsCompleted:true } );
         else{
-            console.warn('Vous devez entrer vos informations pour vous connecter');
+            //console.warn('Vous devez entrer vos informations pour vous connecter');
+            this.setState( {Error: true} );
         }
     }
 
@@ -85,7 +87,7 @@ export default class SignInScreen extends React.Component{
 
         const myPlaceHolder = 'Je gere la transmition de props';
         return (
-            <View>
+            <ScrollView>
                 <View style={styles.root} >
                     <Text style={styles.h1}>Login</Text>
                     <Image
@@ -97,25 +99,27 @@ export default class SignInScreen extends React.Component{
                  <View>
                      <Text style={styles.text}>Adresse mail</Text>
                      <CustomInPut
-                        transferPlaceHolder= {myPlaceHolder}
+                        afficheError={this.state.Error}
+                        messageError="Merci d'entrer votre email"
                         placeholder='Ex: phils@up.com'
-                        inputValue={this.props.inputEmail}
+                        inputValue={this.state.inputEmail}
                         setValue={ (inputText) => this.handleInputValue(inputText, "email") }
                      />
                    
                      <Text style={styles.text}>Mot de passe</Text>
                      <CustomInPut
-                        transferPlaceHolder= {myPlaceHolder}
+                        afficheError={this.state.Error}
+                        messageError="Merci d'entrer votre mot de passe"
                         placeholder='Tapez votre mot de passe...'
-                        inputValue={this.props.inputPassword}
+                        inputValue={this.state.inputPassword}
                         setValue={ (inputText) => this.handleInputValue(inputText, "password") }
-                       // secureTextEntry
+                        secureTextEntry
                      />
     
                      <CustomButton text="Se connecter" onPress={ ()=> this.login() } type="PRIMARY" />
                      <CustomButton text="Créer un compte" onPress={ ()=> this.displayRegisterScreen() } type="TERTIARY"/>
                  </View>
-            </View>
+            </ScrollView>
         )
 
     }

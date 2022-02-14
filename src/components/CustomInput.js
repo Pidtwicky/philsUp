@@ -6,24 +6,43 @@ import { render } from 'react-dom';
 export default class CustomInput extends React.Component{
 
   constructor(props){
-    super(props)
-
-  }
+    super(props);
+    this.state={
+        data:[],
+        inputFirstname: '',
+        inputLastname: '',
+        inputEmail: '',
+        Error:false,
+        inputPassword: '',
+        allFieldsCompleted:false
+    }
+}
 
   render(){
+    
     return (
-      <View style={styles.container}>
-        <TextInput 
+      <>
+        <View style={styles.container}>
+          <TextInput 
 
-          value={this.props.inputValue}
-          onChangeText={ text => this.props.setValue(text) }
-          placeholder={this.props.transferPlaceHolder} 
-          style={styles.input} 
-          
-           secureTextEntry={this.props.secureTextEntry}
-         />
-      </View>
+            value={this.props.inputValue}
+            onChangeText={ text => this.props.setValue(text) }
+            placeholder={this.props.placeholder} 
+            style={styles.input} 
+            
+            secureTextEntry={this.props.secureTextEntry}
+          />
+        </View>
+
+        { (this.props.afficheError && this.props.inputValue === "")  ? (
+            <Text style={{color: 'red', textAlign: 'center'}} >
+              {this.props.messageError}
+            </Text>) 
+            : null
+        }
+      </>
     );
+
   }
 
 }

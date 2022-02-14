@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import { ScrollView, View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 import Logo from '../../assets/images/logo_philsup.png';
 import illustration from '../../assets/images/illustration.png';
 import CustomButton from '../components/CustomButton';
@@ -35,7 +35,7 @@ export default class HomeScreen extends React.Component{
 
     return (
       <>
-        <View>
+        <ScrollView>
           
             <View style={styles.root} >
                 <Text style={styles.h1}>Phil's Up</Text>
@@ -53,7 +53,7 @@ export default class HomeScreen extends React.Component{
                 
                 <CustomButton text="Se connecter" onPress={ ()=> this.onSignInPressed()} type="PRIMARY" />   
             </View>
-        </View>
+        </ScrollView>
       </>
     );
   }

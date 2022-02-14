@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { ScrollView, View, Text, Image, StyleSheet, Dimensions} from 'react-native';
 import Logo from '../../assets/images/logo_philsup.png';
 import CustomInPut from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
@@ -17,6 +17,7 @@ export default class SignUpScreen extends React.Component{
             data:[],
             inputFirstname: '',
             inputLastname: '',
+            Error:false,
             inputEmail: '',
             inputPassword: '',
             allFieldsCompleted:false
@@ -34,11 +35,12 @@ export default class SignUpScreen extends React.Component{
         // créer l'identité de l'utilisateur
         if  ( this.state.inputLastname != "" && this.state.inputFirstname != "" && this.state.inputEmail != "" && this.state.inputPassword != ""){
             this.createUser ();
-            console.log('touts les champs sont remplis')
+            console.log('tous les champs sont remplis')
         }
         
         else{
-            console.warn('touts les champs sont requis')
+            //console.warn('tous les champs sont requis')
+            this.setState( {Error: true} );
         }
     }
 
@@ -58,7 +60,7 @@ export default class SignUpScreen extends React.Component{
                 this.props.navigation.navigate('SignIn');
             }
             else
-                console.warn('Cet email existe deja') 
+                console.warn('Cet email existe déjà') 
         })
     }
 
@@ -115,8 +117,10 @@ export default class SignUpScreen extends React.Component{
                     <View>
                         <Text style={styles.text}>Nom</Text>
                         <CustomInPut
+                            afficheError={this.state.Error}
+                            messageError="Merci d'entrer votre  nom"
                             placeholder='Ex: Smith'
-                            inputValue={this.props.inputLastname}
+                            inputValue={this.state.inputLastname}
                             setValue={ (inputText) => this.handleInputValue(inputText, "lastname") }
                         />
 
@@ -124,22 +128,28 @@ export default class SignUpScreen extends React.Component{
                         
                         <Text style={styles.text}>Prénom</Text>
                         <CustomInPut
+                            afficheError={this.state.Error}
+                            messageError="Merci d'entrer votre  prénom"
                             placeholder='Ex: John'
-                            inputValue={this.props.inputFirstname}
+                            inputValue={this.state.inputFirstname}
                             setValue={ (inputText) => this.handleInputValue(inputText, "firstname") }
                         />
     
                         <Text style={styles.text}>Adresse email</Text>
                         <CustomInPut
+                            afficheError={this.state.Error}
+                            messageError="Merci d'entrer votre email"
                             placeholder='Ex: phils@up.com'
-                            inputValue={this.props.inputEmail}
+                            inputValue={this.state.inputEmail}
                             setValue={ (inputText) => this.handleInputValue(inputText, "email") }
                         />
     
                         <Text style={styles.text}>Mot de passe</Text>
                         <CustomInPut
+                            afficheError={this.state.Error}
+                            messageError="Merci d'entrer votre mot de passe"
                             placeholder='Tapez votre mot de passe...'
-                            inputValue={this.props.inputPassword}
+                            inputValue={this.state.inputPassword}
                             setValue={ (inputText) => this.handleInputValue(inputText, "password") }
                             secureTextEntry
                         />
