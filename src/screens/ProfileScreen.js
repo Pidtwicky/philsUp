@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     },
     profil:{
         flexWrap: "wrap",
-        top: 100,
+        top: 170,
         paddingBottom: 15,
         marginHorizontal: 15,
         borderBottomWidth: 2
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     },
     bannerImage:{
         position:'relative',
-        top:(Platform.OS === 'ios') ? 10 : 20,
+        top:(Platform.OS === 'ios') ? 10 : 60,
         left:50,
         height:100,
         width:100,

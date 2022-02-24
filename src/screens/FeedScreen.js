@@ -24,7 +24,7 @@ const FeedScreen = () => {
 
 const styles = StyleSheet.create({
     container:{
-        backgroundColor:'lightblue',
+        backgroundColor: "grey",
         flex: 1,
     },
 })
